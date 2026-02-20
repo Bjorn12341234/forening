@@ -211,64 +211,6 @@ import * as THREE from './three.min.js';
   });
 
   // ============================================
-  // SPARKLE PARTICLES — twinkling stars scattered around
-  // ============================================
-  var SPARK_COUNT = 40;
-  var sparkGeo = new THREE.BufferGeometry();
-  var sp = new Float32Array(SPARK_COUNT * 3);
-  var ss = new Float32Array(SPARK_COUNT);
-  var sPhase = new Float32Array(SPARK_COUNT);
-
-  for (var i = 0; i < SPARK_COUNT; i++) {
-    sp[i * 3] = (Math.random() - 0.5) * 14;
-    sp[i * 3 + 1] = (Math.random() - 0.5) * 6;
-    sp[i * 3 + 2] = (Math.random() - 0.5) * 3 - 1.5;
-    ss[i] = 1.0 + Math.random() * 3.5;
-    sPhase[i] = Math.random() * Math.PI * 2;
-  }
-
-  sparkGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
-  sparkGeo.setAttribute('size', new THREE.BufferAttribute(ss, 1));
-  sparkGeo.setAttribute('aPhase', new THREE.BufferAttribute(sPhase, 1));
-
-  var sparkVert = [
-    'attribute float size;',
-    'attribute float aPhase;',
-    'uniform float uTime;',
-    'varying float vAlpha;',
-    'void main() {',
-    '  vec4 mvPos = modelViewMatrix * vec4(position, 1.0);',
-    '  float twinkle = sin(uTime * 1.2 + aPhase) * 0.5 + 0.5;',
-    '  twinkle = pow(twinkle, 4.0);',
-    '  vAlpha = twinkle;',
-    '  gl_PointSize = size * twinkle * (200.0 / -mvPos.z);',
-    '  gl_Position = projectionMatrix * mvPos;',
-    '}'
-  ].join('\n');
-
-  var sparkFrag = [
-    'varying float vAlpha;',
-    'void main() {',
-    '  float d = length(gl_PointCoord - vec2(0.5));',
-    '  if (d > 0.5) discard;',
-    '  float glow = 1.0 - smoothstep(0.0, 0.5, d);',
-    '  glow = pow(glow, 2.5);',
-    '  vec3 col = vec3(0.7, 0.88, 0.55);',
-    '  gl_FragColor = vec4(col, glow * vAlpha * 0.5);',
-    '}'
-  ].join('\n');
-
-  var sparkMat = new THREE.ShaderMaterial({
-    uniforms: { uTime: { value: 0 } },
-    vertexShader: sparkVert,
-    fragmentShader: sparkFrag,
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending
-  });
-  scene.add(new THREE.Points(sparkGeo, sparkMat));
-
-  // ============================================
   // Mouse tracking on section
   // ============================================
   section.addEventListener('mousemove', function (e) {
@@ -316,16 +258,6 @@ import * as THREE from './three.min.js';
       u.uMouseX.value = mouse.x;
       u.uMouseY.value = mouse.y;
     }
-
-    sparkMat.uniforms.uTime.value = t;
-
-    // Gentle sparkle drift
-    var positions = sparkGeo.attributes.position.array;
-    for (var j = 0; j < SPARK_COUNT; j++) {
-      positions[j * 3 + 1] += 0.002;
-      if (positions[j * 3 + 1] > 3.5) positions[j * 3 + 1] = -3.5;
-    }
-    sparkGeo.attributes.position.needsUpdate = true;
 
     // Camera sway
     camera.position.x += (mouse.x * 0.25 - camera.position.x) * 0.02;
