@@ -58,13 +58,60 @@ Rules: NEVER delete live-site/, NEVER delete server backup, NEVER deploy unteste
 - Check if PHP built-in server is available locally for testing
 - Sitejet may need to be explicitly disconnected in cPanel after deploy
 
+## Sprint 1 — Grav Setup & Design System (2026-02-20)
+
+### What Was Done
+- Installed Grav CMS 1.7.49.5 in `site/` with admin, form, email, login plugins
+- Created custom `naturhansyn` Grav theme with full design system
+- Built 7 Twig templates: home, default, about, membership, contact, blog, item
+- Migrated all content from live-site/ HTML into Grav markdown pages
+- Copied all images (hero, board members, content) into theme
+- Self-hosted Urbanist and Kaushan Script fonts (no CDN calls)
+- Built responsive layout with desktop nav + mobile hamburger menu
+- Swedish date formatting via custom Twig macro
+- Created admin user for local testing (admin / Natur2026!Hansyn)
+- All 6 pages render at localhost:8000
+
+### Technical Notes
+- Grav language config (`languages.supported`) adds `/sv/` prefix to URLs — DON'T use it for single-language sites
+- `backdrop-filter` on parent creates containing block for `position: fixed` children — mobile-nav must be outside the header element
+- Twig `truncate` filter outputs `&hellip;` entity — use `slice(0, N)` + literal `…` instead
+- PHP dev server: `cd site && php -S localhost:8000 system/router.php`
+- Cache clearing: `rm -rf cache/* tmp/*` (Grav CLI `cache --purge` only removes old items)
+
+### Theme Structure
+```
+site/user/themes/naturhansyn/
+├── blueprints.yaml + naturhansyn.yaml
+├── templates/ (home, default, about, membership, contact, blog, item)
+│   └── partials/ (base, header, footer, macros)
+├── css/ (fonts.css, main.css)
+├── js/ (main.js)
+├── images/ (hero/, board/, content/)
+└── fonts/ (urbanist/, kaushanscript/)
+```
+
+### Page Structure
+```
+site/user/pages/
+├── 01.home/home.md
+├── 02.om-foereningen/about.md
+├── 03.nyheter/blog.md + 4 news items
+├── 04.medlemskap/membership.md
+├── 05.event/blog.md + 2 events
+└── 06.kontakta-oss/contact.md
+```
+
+### Design System
+- Primary: #344642, Accent: #6b9e3a, Background: #fafaf7
+- Fonts: Urbanist (body), Kaushan Script (accent)
+- Components: hero, pillars grid, board-grid, cards, CTA boxes, payment cards
+- Responsive breakpoints: 768px (desktop nav), 480px (single column)
+
 ### Next Sprint Context
-**Sprint 1** starts with:
-1. Read `plan.md`, `spec.md`, `tasks.md`, `memory.md`
-2. Install Grav CMS in `site/` directory
-3. Install admin, form, email plugins
-4. Create `naturhansyn` custom theme
-5. Build all templates, migrate content from `live-site/`
-6. Reference `live-site/*.html` files for current content (copy text, images)
-7. Focus: clean Twig templates, modern CSS, responsive, semantic structure
-8. No Three.js yet — just solid foundations
+**Sprint 2** — Visual Polish & CTA Optimization:
+1. Refine hero section, typography, whitespace
+2. Improve card components, hover effects
+3. Image optimization (srcset, compression, lazy loading)
+4. CSS animations (fade-in on scroll)
+5. Get friend's feedback on visual direction

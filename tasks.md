@@ -11,23 +11,23 @@
 - [x] Create memory.md
 
 ## Sprint 1 — Grav Setup & Design System
-- [ ] Install Grav CMS locally in `site/`
-- [ ] Install plugins: admin, form, email
-- [ ] Create custom `naturhansyn` Grav theme
-- [ ] Design system: CSS custom properties (colors, fonts, spacing)
-- [ ] Build header template (desktop nav + mobile hamburger)
-- [ ] Build footer template
-- [ ] Build homepage template + migrate content
-- [ ] Build about page template + migrate content (board members grid)
-- [ ] Build news page templates (listing + item) + migrate content
-- [ ] Build membership page template + migrate content
-- [ ] Build events page templates (listing + item) + migrate content
-- [ ] Build contact page template + migrate content
-- [ ] Migrate images from live-site/images/
-- [ ] Responsive design pass (mobile-first)
-- [ ] Semantic HTML audit (headings, landmarks, alt text)
-- [ ] Meta tags and Open Graph via Grav config
-- [ ] Test locally with PHP built-in server
+- [x] Install Grav CMS locally in `site/`
+- [x] Install plugins: admin, form, email
+- [x] Create custom `naturhansyn` Grav theme
+- [x] Design system: CSS custom properties (colors, fonts, spacing)
+- [x] Build header template (desktop nav + mobile hamburger)
+- [x] Build footer template
+- [x] Build homepage template + migrate content
+- [x] Build about page template + migrate content (board members grid)
+- [x] Build news page templates (listing + item) + migrate content
+- [x] Build membership page template + migrate content
+- [x] Build events page templates (listing + item) + migrate content
+- [x] Build contact page template + migrate content
+- [x] Migrate images from live-site/images/
+- [x] Responsive design pass (mobile-first)
+- [x] Semantic HTML audit (headings, landmarks, alt text)
+- [x] Meta tags and Open Graph via Grav config
+- [x] Test locally with PHP built-in server
 
 ## Sprint 2 — Visual Polish & CTA Optimization
 - [ ] Hero section visual design

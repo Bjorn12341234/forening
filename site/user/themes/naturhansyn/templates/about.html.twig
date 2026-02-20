@@ -1,0 +1,62 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1>{{ page.title }}</h1>
+    {% if page.header.subtitle %}
+      <p>{{ page.header.subtitle }}</p>
+    {% endif %}
+  </div>
+</div>
+
+{# About text with image #}
+<section class="section">
+  <div class="container container--narrow">
+    {% if page.header.hero_image %}
+    <figure class="content-image">
+      <img src="{{ page.header.hero_image }}" alt="{{ page.header.hero_image_alt|default(page.title) }}" loading="lazy">
+      {% if page.header.hero_image_credit %}
+        <figcaption>Foto: {{ page.header.hero_image_credit }}</figcaption>
+      {% endif %}
+    </figure>
+    {% endif %}
+
+    <div class="content-block">
+      {{ page.content|raw }}
+    </div>
+  </div>
+</section>
+
+{# Board Members #}
+{% if page.header.board_members %}
+<section class="section section--alt">
+  <div class="container">
+    <h2 class="text-center mb-2xl">{{ page.header.board_title|default('Styrelsen') }}</h2>
+    <div class="board-grid">
+      {% for member in page.header.board_members %}
+      <div class="board-member">
+        <img class="board-member__photo" src="{{ member.photo }}" alt="{{ member.name }}" loading="lazy">
+        <p class="board-member__name">{{ member.name }}</p>
+        <p class="board-member__role">{{ member.role }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# Documents #}
+{% if page.header.documents %}
+<section class="section">
+  <div class="container container--narrow text-center">
+    <h2 class="mb-xl">Dokument</h2>
+    <div>
+      {% for doc in page.header.documents %}
+        <a href="{{ doc.file }}" class="btn btn--dark" style="margin: var(--space-sm);">{{ doc.title }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

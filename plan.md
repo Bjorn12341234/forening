@@ -199,4 +199,5 @@ Each sprint session should:
 ## Current Status
 
 **Sprint 0: COMPLETED**
-**Next: Sprint 1 — Site Scaffold & Design System**
+**Sprint 1: COMPLETED**
+**Next: Sprint 2 — Visual Polish & CTA Optimization**

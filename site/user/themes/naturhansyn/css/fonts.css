@@ -1,0 +1,45 @@
+/* Urbanist - self-hosted */
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') format('woff2');
+}
+
+/* Kaushan Script - accent font */
+@font-face {
+  font-family: 'Kaushan Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/kaushanscript/v19/vm8vdRfvXFLG3OLnsO15WYS5DG74wNI.woff2') format('woff2');
+}

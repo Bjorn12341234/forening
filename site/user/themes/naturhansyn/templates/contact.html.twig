@@ -1,0 +1,41 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1>{{ page.title }}</h1>
+    {% if page.header.subtitle %}
+      <p>{{ page.header.subtitle }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<section class="section">
+  <div class="container container--narrow">
+    {% if page.header.contact_image %}
+    <figure class="content-image">
+      <img src="{{ page.header.contact_image }}" alt="Kontakta oss" loading="lazy">
+    </figure>
+    {% endif %}
+
+    <div class="content-block mb-2xl">
+      {{ page.content|raw }}
+    </div>
+
+    <div class="content-block">
+      <h2>Kontaktuppgifter</h2>
+      <p>
+        <strong>E-post:</strong>
+        <a href="mailto:naturhansyn@gmail.com">naturhansyn@gmail.com</a>
+      </p>
+      <p>
+        <strong>Facebook:</strong>
+        <a href="https://www.facebook.com/profile.php?id=61558332027547" target="_blank" rel="noopener">Föreningen NaturHänsyn på Facebook</a>
+      </p>
+      <p style="margin-top: var(--space-xl); color: var(--color-text-muted); font-style: italic;">
+        Vi återkopplar så fort vi har möjlighet! /Styrelsen
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

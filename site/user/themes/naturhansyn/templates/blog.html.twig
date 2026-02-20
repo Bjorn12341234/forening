@@ -1,0 +1,48 @@
+{% extends 'partials/base.html.twig' %}
+{% import 'partials/macros.html.twig' as macros %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1>{{ page.title }}</h1>
+    {% if page.header.subtitle %}
+      <p>{{ page.header.subtitle }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if page.content %}
+      <div class="content-block mb-2xl">
+        {{ page.content|raw }}
+      </div>
+    {% endif %}
+
+    <div class="post-grid">
+      {% for post in page.collection() %}
+      <article class="card">
+        {% if post.header.image %}
+        <div class="card__image">
+          <a href="{{ post.url }}">
+            <img src="{{ post.header.image }}" alt="{{ post.title }}" loading="lazy">
+          </a>
+        </div>
+        {% endif %}
+        <div class="card__body">
+          {% if post.date %}
+            <time class="card__date" datetime="{{ post.date|date('Y-m-d') }}">{{ macros.swedish_date(post.date) }}</time>
+          {% endif %}
+          <h2 class="card__title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h2>
+          {% if post.summary %}
+            <p class="card__excerpt">{{ post.content|striptags|slice(0, 150) }}…</p>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

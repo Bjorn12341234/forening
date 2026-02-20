@@ -1,0 +1,10 @@
+name: NaturHänsyn
+slug: naturhansyn
+type: theme
+version: 1.0.0
+description: Custom theme for Föreningen NaturHänsyn
+icon: leaf
+author:
+  name: Björn
+  url: https://naturhansyn.se
+homepage: https://naturhansyn.se

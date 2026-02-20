@@ -1,0 +1,30 @@
+<header class="site-header" role="banner">
+  <div class="site-header__inner">
+    <a href="{{ home_url }}" class="site-header__logo" aria-label="NaturHänsyn - Startsida">
+      <img src="{{ url('theme://images/logo.png') }}" alt="NaturHänsyn logotyp" width="40" height="40">
+      <span class="site-header__logo-text">NaturHänsyn</span>
+    </a>
+
+    <nav class="site-nav" role="navigation" aria-label="Huvudnavigation">
+      {% for page in pages.children.visible %}
+        <a href="{{ page.url }}"{% if page.active or page.activeChild %} class="active"{% endif %}>
+          {{ page.menu }}
+        </a>
+      {% endfor %}
+      <a href="/medlemskap" class="site-nav__cta">Bli medlem</a>
+    </nav>
+
+    <button class="hamburger" aria-label="Öppna meny" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" role="navigation" aria-label="Mobilnavigation">
+  {% for page in pages.children.visible %}
+    <a href="{{ page.url }}">{{ page.menu }}</a>
+  {% endfor %}
+  <a href="/medlemskap" class="btn btn--primary">Bli medlem</a>
+</nav>

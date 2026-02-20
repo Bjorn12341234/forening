@@ -1,2 +1,15 @@
 password.md
 Untitled Document
+
+# Grav CMS
+site/cache/*
+site/tmp/*
+site/logs/*
+site/backup/*
+site/images/*
+site/assets/*
+site/user/data/*
+site/user/accounts/*
+!site/cache/.gitkeep
+!site/tmp/.gitkeep
+!site/logs/.gitkeep

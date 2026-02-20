@@ -1,0 +1,46 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1>{{ page.title }}</h1>
+    {% if page.header.subtitle %}
+      <p>{{ page.header.subtitle }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<section class="section">
+  <div class="container container--narrow">
+    <div class="content-block">
+      {{ page.content|raw }}
+    </div>
+  </div>
+</section>
+
+{# Payment Section #}
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Betala med Swish</h2>
+      <p>Swisha till <strong>123-2485159</strong> och märk betalningen med "medlemsavgift + ditt namn".</p>
+      <p>Skicka sedan namn och e-postadress till <a href="mailto:naturhansyn@gmail.com" style="color: var(--color-accent-light);">naturhansyn@gmail.com</a></p>
+
+      <div class="payment-info">
+        {% if page.header.swish_qr %}
+        <div class="payment-card">
+          <img src="{{ page.header.swish_qr }}" alt="Swish QR-kod för medlemsavgift" loading="lazy">
+          <p class="payment-card__label">Medlemsavgift</p>
+        </div>
+        {% endif %}
+        {% if page.header.donation_qr %}
+        <div class="payment-card">
+          <img src="{{ page.header.donation_qr }}" alt="Swish QR-kod för donation" loading="lazy">
+          <p class="payment-card__label">Donation</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
