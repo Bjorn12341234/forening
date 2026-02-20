@@ -13,16 +13,20 @@
     <h1 class="hero__title">NaturHänsyn</h1>
     <p class="hero__subtitle">– för allas vår skull!</p>
     <p class="hero__text">{{ page.header.hero_text|default('Föreningen NaturHänsyn har som syfte att arbeta för att såväl markägare som skogsbolag och myndigheter tar sitt ansvar och visar Hänsyn till Naturen!') }}</p>
-    <div>
-      <a href="/medlemskap" class="btn btn--primary">Bli medlem</a>
+    <div class="hero__actions">
+      <a href="/medlemskap" class="btn btn--cta">Bli medlem</a>
       <a href="/om-foereningen" class="btn btn--outline">Läs mer om oss</a>
     </div>
+  </div>
+  <div class="hero__scroll" aria-hidden="true">
+    <span>Scrolla</span>
+    <div class="hero__scroll-line"></div>
   </div>
 </section>
 
 {# Mission Statement #}
 <section class="section">
-  <div class="container container--narrow text-center">
+  <div class="container container--narrow text-center fade-in">
     {{ page.content|raw }}
   </div>
 </section>
@@ -30,10 +34,10 @@
 {# Four Pillars #}
 <section class="section section--alt">
   <div class="container">
-    <h2 class="text-center mb-2xl">Vad gör vi?</h2>
-    <div class="pillars">
+    <h2 class="text-center mb-3xl fade-in">Vad gör vi?</h2>
+    <div class="pillars stagger-children">
       {% for pillar in page.header.pillars %}
-      <div class="pillar">
+      <div class="pillar fade-in">
         <div class="pillar__icon">{{ pillar.icon|raw }}</div>
         <h3 class="pillar__title">{{ pillar.title }}</h3>
         <p class="pillar__text">{{ pillar.text }}</p>
@@ -44,11 +48,11 @@
 </section>
 
 {# CTA Banner #}
-<section class="section section--dark text-center">
-  <div class="container container--narrow">
+<section class="section section--dark cta-banner text-center">
+  <div class="container container--narrow fade-in">
     <h2>Vill du göra skillnad?</h2>
-    <p>Oavsett om du vill stötta oss som passiv medlem eller aktivt delta i vårt arbete — varje medlem räknas!</p>
-    <a href="/medlemskap" class="btn btn--primary">Bli medlem — 100 kr/år</a>
+    <p class="mb-2xl">Oavsett om du vill stötta oss som passiv medlem eller aktivt delta i vårt arbete — varje medlem räknas!</p>
+    <a href="/medlemskap" class="btn btn--cta">Bli medlem — 100 kr/år</a>
   </div>
 </section>
 {% endblock %}

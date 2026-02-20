@@ -14,7 +14,7 @@
 <section class="section">
   <div class="container container--narrow">
     {% if page.header.hero_image %}
-    <figure class="content-image">
+    <figure class="content-image fade-in">
       <img src="{{ page.header.hero_image }}" alt="{{ page.header.hero_image_alt|default(page.title) }}" loading="lazy">
       {% if page.header.hero_image_credit %}
         <figcaption>Foto: {{ page.header.hero_image_credit }}</figcaption>
@@ -22,7 +22,7 @@
     </figure>
     {% endif %}
 
-    <div class="content-block">
+    <div class="content-block fade-in">
       {{ page.content|raw }}
     </div>
   </div>
@@ -32,10 +32,10 @@
 {% if page.header.board_members %}
 <section class="section section--alt">
   <div class="container">
-    <h2 class="text-center mb-2xl">{{ page.header.board_title|default('Styrelsen') }}</h2>
-    <div class="board-grid">
+    <h2 class="text-center mb-3xl fade-in">{{ page.header.board_title|default('Styrelsen') }}</h2>
+    <div class="board-grid stagger-children">
       {% for member in page.header.board_members %}
-      <div class="board-member">
+      <div class="board-member fade-in">
         <img class="board-member__photo" src="{{ member.photo }}" alt="{{ member.name }}" loading="lazy">
         <p class="board-member__name">{{ member.name }}</p>
         <p class="board-member__role">{{ member.role }}</p>
@@ -49,7 +49,7 @@
 {# Documents #}
 {% if page.header.documents %}
 <section class="section">
-  <div class="container container--narrow text-center">
+  <div class="container container--narrow text-center fade-in">
     <h2 class="mb-xl">Dokument</h2>
     <div>
       {% for doc in page.header.documents %}

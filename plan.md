@@ -200,4 +200,5 @@ Each sprint session should:
 
 **Sprint 0: COMPLETED**
 **Sprint 1: COMPLETED**
-**Next: Sprint 2 — Visual Polish & CTA Optimization**
+**Sprint 2: COMPLETED**
+**Next: Sprint 3 — Three.js Progressive Enhancement**

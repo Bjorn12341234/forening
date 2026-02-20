@@ -14,14 +14,14 @@
 <section class="section">
   <div class="container">
     {% if page.content %}
-      <div class="content-block mb-2xl">
+      <div class="content-block mb-2xl fade-in">
         {{ page.content|raw }}
       </div>
     {% endif %}
 
-    <div class="post-grid">
+    <div class="post-grid stagger-children">
       {% for post in page.collection() %}
-      <article class="card">
+      <article class="card fade-in">
         {% if post.header.image %}
         <div class="card__image">
           <a href="{{ post.url }}">
@@ -39,6 +39,7 @@
           {% if post.summary %}
             <p class="card__excerpt">{{ post.content|striptags|slice(0, 150) }}…</p>
           {% endif %}
+          <a href="{{ post.url }}" class="card__link">Läs mer</a>
         </div>
       </article>
       {% endfor %}

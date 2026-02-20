@@ -115,3 +115,51 @@ site/user/pages/
 3. Image optimization (srcset, compression, lazy loading)
 4. CSS animations (fade-in on scroll)
 5. Get friend's feedback on visual direction
+
+## Sprint 2 — Visual Polish & CTA Optimization (2026-02-20)
+
+### What Was Done
+- Complete CSS overhaul: refined typography scale (bigger --text-6xl, tighter leading)
+- Hero: full 100vh viewport, entrance animation, scroll indicator, better gradient overlay
+- CTA: new .btn--cta class with green glow shadow, prominent sizing
+- Cards: staggered fade-in animation, green uppercase date labels, "Läs mer" arrow links
+- Board members: green uppercase roles, improved hover (shadow + scale), larger grid gap
+- Scroll animations: IntersectionObserver-based .fade-in and .fade-in-up classes
+- Stagger effect: .stagger-children applies progressive transition-delay to children
+- Image lazy fade-in: images with loading="lazy" fade in on load via JS
+- Header: .is-scrolled class via JS (darker bg + shadow on scroll)
+- Swish section: .swish-number badge for the number, .payment-card__amount for pricing
+- Form: modern inputs with green focus ring (box-shadow glow), .form-row grid layout
+- Page headers: radial gradient glow effect via ::before pseudo-element
+- prefers-reduced-motion: disables all animations and transitions
+- Added utility classes: .mb-3xl, .mb-md, .sr-only, .section-label
+
+### CSS Architecture Changes
+- Added variables: --text-6xl, --leading-snug, --tracking-tight/wide, --color-accent-dark,
+  --color-swish, --shadow-glow, --transition-spring, --radius-2xl, --space-6xl, --header-height
+- Increased spacing: sections use --space-5xl (8rem) instead of --space-4xl (6rem)
+- Typography: headings now font-weight: 700 (was 600), letter-spacing: --tracking-tight
+- Buttons: larger padding (14px), btn--cta is 18px padding with green glow shadow
+- Cards: rounded to --radius-xl (was --radius-lg), flexbox column layout for equal heights
+- Board member roles: green accent color, uppercase, letter-spacing
+
+### JS Changes
+- Replaced inline header scroll with .is-scrolled class toggle
+- Added IntersectionObserver for .fade-in / .fade-in-up elements
+- Added img[loading="lazy"] load event listener for .is-loaded fade-in
+- All observers use { passive: true } and unobserve after triggering
+
+### Template Changes
+- home.html.twig: .hero__actions wrapper div, .hero__scroll indicator, fade-in classes
+- blog.html.twig: .card__link "Läs mer" with arrow, stagger-children on grid
+- membership.html.twig: .swish-number badge, .payment-card__amount prices
+- All templates: fade-in and stagger-children classes on sections/elements
+- about.html.twig: stagger-children on board-grid
+
+### Next Sprint Context
+**Sprint 3** — Three.js Progressive Enhancement:
+1. Self-host Three.js (minified, deferred loading)
+2. Design hero scene concept (nature/forest theme, subtle particles)
+3. WebGL detection + static fallback
+4. Build Three.js scene (responsive, low performance impact)
+5. prefers-reduced-motion support (already in CSS, need JS check too)

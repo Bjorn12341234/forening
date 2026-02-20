@@ -12,18 +12,18 @@
 
 <section class="section">
   <div class="container container--narrow">
-    <div class="content-block">
+    <div class="content-block fade-in">
       {{ page.content|raw }}
     </div>
   </div>
 </section>
 
 {# Payment Section #}
-<section class="section" style="padding-top: 0;">
+<section class="section section--alt" style="padding-top: 0;">
   <div class="container">
-    <div class="cta-box">
+    <div class="cta-box fade-in">
       <h2>Betala med Swish</h2>
-      <p>Swisha till <strong>123-2485159</strong> och märk betalningen med "medlemsavgift + ditt namn".</p>
+      <p>Swisha till <span class="swish-number">123-2485159</span> och märk betalningen med "medlemsavgift + ditt namn".</p>
       <p>Skicka sedan namn och e-postadress till <a href="mailto:naturhansyn@gmail.com" style="color: var(--color-accent-light);">naturhansyn@gmail.com</a></p>
 
       <div class="payment-info">
@@ -31,12 +31,14 @@
         <div class="payment-card">
           <img src="{{ page.header.swish_qr }}" alt="Swish QR-kod för medlemsavgift" loading="lazy">
           <p class="payment-card__label">Medlemsavgift</p>
+          <p class="payment-card__amount">100 kr/år</p>
         </div>
         {% endif %}
         {% if page.header.donation_qr %}
         <div class="payment-card">
           <img src="{{ page.header.donation_qr }}" alt="Swish QR-kod för donation" loading="lazy">
           <p class="payment-card__label">Donation</p>
+          <p class="payment-card__amount">Valfritt belopp</p>
         </div>
         {% endif %}
       </div>

@@ -14,7 +14,7 @@
 <section class="section">
   <div class="container container--narrow">
     {% if page.header.image %}
-    <figure class="content-image">
+    <figure class="content-image fade-in">
       <img src="{{ page.header.image }}" alt="{{ page.title }}" loading="lazy">
       {% if page.header.image_credit %}
         <figcaption>Foto: {{ page.header.image_credit }}</figcaption>
@@ -22,11 +22,11 @@
     </figure>
     {% endif %}
 
-    <div class="content-block">
+    <div class="content-block fade-in">
       {{ page.content|raw }}
     </div>
 
-    <p class="mt-0" style="margin-top: var(--space-2xl);">
+    <p style="margin-top: var(--space-2xl);">
       <a href="{{ page.parent.url }}">&larr; Tillbaka</a>
     </p>
   </div>

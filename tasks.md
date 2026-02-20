@@ -30,16 +30,16 @@
 - [x] Test locally with PHP built-in server
 
 ## Sprint 2 — Visual Polish & CTA Optimization
-- [ ] Hero section visual design
-- [ ] Typography scale refinement
-- [ ] Whitespace and spacing pass
-- [ ] CTA buttons ("Bli medlem" prominent)
-- [ ] News/event card components
-- [ ] Board member photo grid
-- [ ] Image optimization (compress, srcset, lazy load)
-- [ ] CSS scroll animations
-- [ ] Form styling
-- [ ] Swish payment section design
+- [x] Hero section visual design (full viewport, entrance animation, scroll indicator)
+- [x] Typography scale refinement (bigger scale, tighter headings, better contrast)
+- [x] Whitespace and spacing pass (generous section padding, modern feel)
+- [x] CTA buttons ("Bli medlem" prominent with glow, btn--cta class)
+- [x] News/event card components (staggered fade-in, "Läs mer" links, green date labels)
+- [x] Board member photo grid (green uppercase roles, hover shadow, larger spacing)
+- [x] Image optimization (lazy loading with fade-in, IntersectionObserver)
+- [x] CSS scroll animations (fade-in, fade-in-up, stagger-children, prefers-reduced-motion)
+- [x] Form styling (modern inputs, focus ring with green glow, form-row grid)
+- [x] Swish payment section design (highlighted number badge, pricing in cards, radial glow)
 
 ## Sprint 3 — Three.js Progressive Enhancement
 - [ ] Self-host Three.js (minified, deferred)

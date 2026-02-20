@@ -1,21 +1,23 @@
 // NaturHänsyn — main.js
+// Sprint 2: scroll animations, image lazy fade, header scroll
 
 (function () {
   'use strict';
 
+  // ==========================================
   // Mobile menu toggle
-  const hamburger = document.querySelector('.hamburger');
-  const mobileNav = document.querySelector('.mobile-nav');
+  // ==========================================
+  var hamburger = document.querySelector('.hamburger');
+  var mobileNav = document.querySelector('.mobile-nav');
 
   if (hamburger && mobileNav) {
     hamburger.addEventListener('click', function () {
-      const isOpen = mobileNav.classList.toggle('is-open');
+      var isOpen = mobileNav.classList.toggle('is-open');
       hamburger.classList.toggle('is-active');
       hamburger.setAttribute('aria-expanded', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close mobile nav when clicking a link
     mobileNav.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         mobileNav.classList.remove('is-open');
@@ -26,15 +28,64 @@
     });
   }
 
-  // Header background on scroll
-  const header = document.querySelector('.site-header');
+  // ==========================================
+  // Header scroll effect
+  // ==========================================
+  var header = document.querySelector('.site-header');
   if (header) {
-    window.addEventListener('scroll', function () {
-      if (window.scrollY > 50) {
-        header.style.background = 'rgba(52, 70, 66, 0.98)';
+    var onScroll = function () {
+      if (window.scrollY > 60) {
+        header.classList.add('is-scrolled');
       } else {
-        header.style.background = 'rgba(52, 70, 66, 0.95)';
+        header.classList.remove('is-scrolled');
       }
-    }, { passive: true });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
+
+  // ==========================================
+  // Scroll animations (IntersectionObserver)
+  // ==========================================
+  if ('IntersectionObserver' in window) {
+    var fadeElements = document.querySelectorAll('.fade-in, .fade-in-up');
+
+    if (fadeElements.length > 0) {
+      var fadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      fadeElements.forEach(function (el) {
+        fadeObserver.observe(el);
+      });
+    }
+  } else {
+    // Fallback: show all elements immediately
+    document.querySelectorAll('.fade-in, .fade-in-up').forEach(function (el) {
+      el.classList.add('is-visible');
+    });
+  }
+
+  // ==========================================
+  // Image lazy fade-in
+  // ==========================================
+  var lazyImages = document.querySelectorAll('img[loading="lazy"]');
+  lazyImages.forEach(function (img) {
+    if (img.complete) {
+      img.classList.add('is-loaded');
+    } else {
+      img.addEventListener('load', function () {
+        img.classList.add('is-loaded');
+      });
+    }
+  });
+
 })();
