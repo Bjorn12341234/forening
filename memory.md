@@ -157,9 +157,60 @@ site/user/pages/
 - about.html.twig: stagger-children on board-grid
 
 ### Next Sprint Context
-**Sprint 3** — Three.js Progressive Enhancement:
-1. Self-host Three.js (minified, deferred loading)
-2. Design hero scene concept (nature/forest theme, subtle particles)
-3. WebGL detection + static fallback
-4. Build Three.js scene (responsive, low performance impact)
-5. prefers-reduced-motion support (already in CSS, need JS check too)
+**Sprint 3** — Three.js Progressive Enhancement
+
+## Sprint 3 — Three.js Progressive Enhancement (2026-02-20)
+
+### What Was Done
+- Self-hosted Three.js v0.170 (ES module, 676KB minified) in `js/three.min.js`
+- Designed aurora borealis (norrsken) scene — flowing ribbons + sparkle particles
+- **Key decision:** Three.js lives in the CTA banner section, NOT the hero
+  - Hero stays clean with the forest photo (the image is strong on its own)
+  - CTA "Vill du göra skillnad?" section gets the aurora as living background
+  - Dark green bg + additive-blended aurora ribbons = great contrast + readability
+- WebGL detection with graceful fallback (canvas removed if no WebGL)
+- prefers-reduced-motion: JS aborts early + CSS hides canvas
+- IntersectionObserver pauses animation when section is off-screen
+- Fixed hero subtitle color to white (was accent green, poor readability)
+
+### Technical Notes
+- Three.js v0.170 is ES module only — loaded via `<script type="module">`
+  - This IS the graceful degradation: browsers without module support = no Three.js = fine
+- Aurora uses 5 ribbon meshes (PlaneGeometry) with custom ShaderMaterial
+  - Vertex shader: multi-layer sine waves + simplex noise displacement
+  - Fragment shader: vertical gradient, bright core line, color mixing, shimmer
+  - Additive blending on dark background creates the glowing aurora effect
+- Sparkle particles: 40 points with twinkle (pow(sin, 4)) and slow upward drift
+- GLSL simplex noise function embedded in shader strings (no external dependency)
+- Mouse tracking on the CTA section: ribbons shift + camera sways gently
+- Canvas uses `pointer-events: none` so CTA button remains clickable
+- `powerPreference: 'low-power'` on WebGL context
+
+### Scene Architecture
+```
+scene.js (ES module)
+├── Aurora ribbons (5x PlaneGeometry + ShaderMaterial)
+│   ├── Vertex: sine waves + noise → organic flowing motion
+│   └── Fragment: color gradients + core glow + shimmer
+├── Sparkle particles (40x Points + ShaderMaterial)
+│   ├── Twinkle via sin+pow in vertex shader
+│   └── Soft glow circle in fragment shader
+├── Mouse tracking (smooth interpolation)
+├── IntersectionObserver (pause when off-screen)
+└── Resize handler (responsive canvas)
+```
+
+### Files Changed
+- `js/three.min.js` — Three.js v0.170 module (new)
+- `js/scene.js` — Aurora scene (new)
+- `css/main.css` — CTA banner canvas styles, reduced-motion rule, subtitle color fix
+- `templates/home.html.twig` — Canvas element in CTA section, script module tag
+
+### Next Sprint Context
+**Sprint 4** — Admin Panel Configuration & User Setup:
+1. Configure Grav admin panel (Swedish language, simple dashboard)
+2. Create content blueprints (news item, event, board member)
+3. Create admin accounts for board members
+4. Configure image uploads and email plugin
+5. Test full admin workflow
+6. Write board member guide (Swedish)

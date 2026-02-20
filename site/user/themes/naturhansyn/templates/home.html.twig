@@ -47,12 +47,17 @@
   </div>
 </section>
 
-{# CTA Banner #}
-<section class="section section--dark cta-banner text-center">
+{# CTA Banner with Three.js Aurora #}
+<section class="section section--dark cta-banner cta-banner--aurora text-center" id="cta-aurora">
+  <canvas id="aurora-canvas" class="cta-banner__canvas" aria-hidden="true"></canvas>
   <div class="container container--narrow fade-in">
     <h2>Vill du göra skillnad?</h2>
     <p class="mb-2xl">Oavsett om du vill stötta oss som passiv medlem eller aktivt delta i vårt arbete — varje medlem räknas!</p>
     <a href="/medlemskap" class="btn btn--cta">Bli medlem — 100 kr/år</a>
   </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url('theme://js/scene.js') }}"></script>
 {% endblock %}

@@ -42,12 +42,13 @@
 - [x] Swish payment section design (highlighted number badge, pricing in cards, radial glow)
 
 ## Sprint 3 — Three.js Progressive Enhancement
-- [ ] Self-host Three.js (minified, deferred)
-- [ ] Design hero scene concept
-- [ ] WebGL detection + fallback
-- [ ] Implement Three.js scene
-- [ ] prefers-reduced-motion support
-- [ ] Performance testing
+- [x] Self-host Three.js (minified, deferred) — three.module.min.js v0.170
+- [x] Design scene concept — aurora borealis in CTA banner (not hero)
+- [x] WebGL detection + graceful fallback (canvas removed if no WebGL)
+- [x] Implement Three.js aurora scene (5 ribbons + sparkle particles)
+- [x] prefers-reduced-motion support (JS check + CSS display:none)
+- [x] Performance: IntersectionObserver pauses when off-screen, low-power GPU
+- [x] Hero subtitle color fix (white for readability)
 
 ## Sprint 4 — Admin Panel Configuration & User Setup
 - [ ] Configure Grav admin (Swedish language, simple dashboard)
