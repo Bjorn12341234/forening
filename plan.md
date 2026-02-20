@@ -1,163 +1,202 @@
-You are Claude Code running inside my repository.
+# NATURHANSYN.SE — MODERNIZATION PLAN
 
-GOAL
-Create a structured, sprint-based modernization and SEO optimization plan for the website https://naturhansyn.se
+## Project Overview
 
-The website content must remain in Swedish.
-All development instructions, planning, and documentation must be in English.
+Modernize naturhansyn.se from a Sitejet-built site to a custom modern site with
+Three.js effects. Keep all existing content. Make it look professional and modern.
+Provide a simple admin panel so board members can update content.
 
-This is NOT an implementation request yet.
-Your task in this session is ONLY to:
+Website content: Swedish.
+Development docs: English.
 
-1. Analyze the live website structure and pages.
-2. Produce a detailed execution plan.
-3. Create structured sprint tasks.
-4. Prepare the repo documentation for iterative execution.
+## Architecture
 
-CRITICAL WORKFLOW REQUIREMENTS
+- **CMS:** Grav (flat-file PHP CMS, no database)
+- **Frontend:** Custom Grav theme with Three.js (progressive enhancement)
+- **Content:** Markdown files managed via Grav admin panel
+- **Admin:** Grav's admin plugin — board members log in at /admin/ to edit content
+- **Forms:** Grav form + email plugins (replaces Sitejet proxy)
+- **Hosting:** Same server (Hostup cPanel, Apache, PHP 8.1)
+- **Deploy:** Local dev -> git commit -> rsync to server
+- **Revert:** live-site/ in git always has the original Sitejet snapshot
 
-- You MUST read these files first if they exist:
-  - Context.md
-  - Plan.md
-  - Specs.md
-  - Tasks.md
-  - Memory.md
+## Sprint Roadmap
 
-- If they do not exist, create them.
+### Sprint 0 — Discovery & Baseline (COMPLETED)
 
-- All work must be broken into clearly defined SPRINTS.
-- Each sprint must be independently executable in a new session with fresh tokens.
-- After each sprint, Tasks.md must be updated.
-- After each sprint, Memory.md must be updated with:
-  - What was done
-  - Decisions made
-  - Technical constraints discovered
-  - Open issues
-  - Next sprint context
+- [x] Audit live site structure and technology
+- [x] Discover site is Sitejet, NOT WordPress
+- [x] Download full site locally (live-site/)
+- [x] Initialize git with baseline commit
+- [x] Document actual architecture in spec.md
+- [x] Create project documentation
 
-- Each sprint must end with:
-  - Updated Tasks.md
-  - Updated Memory.md
-  - Clear next-sprint entry point
+### Sprint 1 — Grav Setup & Design System
 
-NO hand-waving.
-Every improvement must map to:
-- Concrete files
-- Concrete implementation approach
-- Measurable outcome
+**Objective:** Install Grav, create custom theme skeleton with design system,
+navigation, and layout. Migrate all existing content into Grav pages.
+No Three.js yet — just clean, modern HTML/CSS via Grav templates.
 
-PROJECT SCOPE
+**Tasks:**
+1. Install Grav CMS locally in `site/` directory
+2. Install admin, form, and email plugins
+3. Create custom `naturhansyn` theme
+4. Design system: CSS custom properties (colors, typography, spacing)
+   - Keep nature green palette but modernize it
+   - Use Urbanist font (already in use, good choice)
+   - Define spacing scale, border-radius, shadows
+5. Build Twig template partials:
+   - Header with proper desktop nav + mobile hamburger
+   - Footer with social links + email + copyright
+   - Base page layout template
+6. Build page templates and migrate content from live-site/:
+   - Homepage (default.html.twig): hero, mission, 4 pillars
+   - About (default.html.twig): board members grid
+   - News (blog.html.twig + item.html.twig): article cards
+   - Membership (default.html.twig): CTA + payment info
+   - Events (blog.html.twig + item.html.twig): event cards
+   - Contact (form.html.twig): contact form
+7. Migrate all images from live-site/images/
+8. Responsive design (mobile-first)
+9. Proper heading hierarchy (h1 per page, semantic HTML)
+10. Meta tags, Open Graph, canonical URLs via Grav config
+11. Test locally with `php -S localhost:8000`
 
-Website:
-- https://naturhansyn.se/
-- /om-foereningen/
-- /nyheter/
-- /medlemskap/
-- /event/
-- /kontakta-oss/
+**Files:** `site/` directory (Grav installation + custom theme)
+**Acceptance:** All 6 pages render via Grav, admin panel works, responsive, semantic HTML
+**Risks:** Design direction — need agreement on visual style before going deep
 
-OBJECTIVES
+### Sprint 2 — Visual Polish & CTA Optimization
 
-1) Modernize visual structure
-- Improve layout hierarchy
-- Introduce modern design system
-- Improve whitespace and typography
-- Add subtle Three.js effects (only as progressive enhancement)
-- Must degrade gracefully if WebGL disabled
+**Objective:** Make it look great. Strong visual hierarchy, modern feel, clear CTAs.
 
-2) Improve UX & conversion
-- Strong CTA placement
-- Clear navigation structure
-- Better membership flow
-- Event clarity
-- Structured content blocks
+**Tasks:**
+1. Hero section design — large, impactful (prepares space for Three.js later)
+2. Typography refinement — proper scale, line heights, text contrast
+3. Whitespace and spacing — generous, modern feel
+4. CTA buttons — "Bli medlem" prominent on homepage and nav
+5. Card components for news and events
+6. Board member grid with proper photos and roles
+7. Image optimization — compress, proper srcset, lazy loading
+8. Subtle CSS animations (fade-in on scroll, hover states)
+9. Form styling for contact page
+10. Swish payment section — clear, trustworthy design
 
-3) Technical SEO (aligned with latest Google core update principles)
-- E-E-A-T strengthening
-- On-page optimization
-- Schema markup strategy
-- Internal linking structure
-- Page speed optimization
-- Mobile-first performance
-- Core Web Vitals targets
+**Files:** `site/assets/css/main.css`, all page HTML files
+**Acceptance:** Visually modern, clear CTAs, Lighthouse accessibility > 90
+**Risks:** Subjective design choices — get friend's feedback after this sprint
 
-4) Performance constraints
-- WebGL must not block rendering
-- JS must be deferred
-- Lighthouse mobile score target ≥ 90
-- No heavy animation loops
+### Sprint 3 — Three.js Progressive Enhancement
 
-5) WordPress integration strategy
-- Theme modification approach
-- Gutenberg or custom block strategy
-- Asset bundling strategy
-- Caching compatibility
-- Plugin recommendations (only if necessary)
+**Objective:** Add Three.js hero effect. Must degrade gracefully.
 
-OUTPUT STRUCTURE FOR THIS SESSION
+**Tasks:**
+1. Self-host Three.js (minified, deferred loading)
+2. Design hero scene concept (nature/forest themed, subtle, not distracting)
+3. Implement WebGL detection
+4. Build Three.js scene with:
+   - Gentle particle system or organic shapes
+   - Nature-inspired colors matching site palette
+   - Responsive (adapts to viewport)
+   - Low performance impact (no heavy loops)
+5. Static fallback hero image when WebGL unavailable
+6. Performance testing — ensure no render blocking
+7. Reduce motion support (prefers-reduced-motion)
 
-You must produce:
+**Files:** `site/assets/js/three.min.js`, `site/assets/js/scene.js`, hero section HTML/CSS
+**Acceptance:** Three.js runs smoothly, graceful fallback, Lighthouse >= 90 on mobile
+**Risks:** Performance on low-end devices — keep effects subtle
 
-1. High-level architecture plan
-2. Detailed sprint roadmap (Sprint 0, Sprint 1, Sprint 2, etc.)
-3. For each sprint:
-   - Objective
-   - Technical tasks
-   - Files impacted
-   - Acceptance criteria
-   - Risks
-4. Initial Tasks.md
-5. Initial Memory.md
-6. Updated Plan.md
-7. Clear instruction on how next sprint session should start
+### Sprint 4 — Admin Panel Configuration & User Setup
 
-SPRINT STRUCTURE RULES
+**Objective:** Configure Grav admin panel for board members. Set up user accounts,
+customize the editing experience, and test the content workflow.
 
-Sprint 0:
-- Discovery and audit
-- Technical SEO audit
-- Theme analysis
-- Performance baseline
-- Content gap analysis
+**Tasks:**
+1. Configure Grav admin panel:
+   - Set Swedish language for admin UI
+   - Customize dashboard for simplicity
+   - Set up content blueprints (define what fields admins see per page type)
+2. Create admin user accounts for board members
+3. Define page blueprints:
+   - News item blueprint (title, date, body text, featured image)
+   - Event blueprint (title, date, location, description, image)
+   - Board member blueprint (name, role, photo)
+4. Configure image upload settings (max size, allowed types, auto-resize)
+5. Set up Grav email plugin for contact form delivery
+6. Test full admin workflow:
+   - Admin logs in
+   - Creates a news item with image
+   - Edits an event
+   - Changes appear on the site
+7. Write a simple guide for board members (Swedish)
 
-Sprint 1:
-- Structural improvements
-- Navigation improvements
-- Heading hierarchy fixes
-- Metadata structure
+**Files:** `site/user/config/`, `site/user/blueprints/`, `site/user/accounts/`
+**Acceptance:** Board member can log in, add news/events, changes appear on site
+**Risks:** Grav admin learning curve — keep blueprints simple, write clear guide
 
-Sprint 2:
-- Design system implementation
-- Typography and spacing
-- CTA blocks
-- Swedish content refinement
+### Sprint 5 — Forms, SEO & Contact
 
-Sprint 3:
-- Three.js progressive enhancement hero
-- Performance testing
-- WebGL fallback logic
+**Objective:** Working contact form via Grav plugins, SEO optimization.
 
-Sprint 4:
-- Schema implementation
-- Advanced SEO improvements
-- Internal linking optimization
+**Tasks:**
+1. Configure Grav form plugin for contact page:
+   - Form definition in contact page frontmatter
+   - Email delivery via Grav email plugin
+   - Honeypot anti-spam field
+   - Success/error messages in Swedish
+2. SEO improvements:
+   - Schema.org markup (Organization, Event, ContactPage)
+   - Proper meta descriptions per page
+   - Structured data for board members (Person schema)
+   - Internal linking between pages
+   - XML sitemap generation
+   - robots.txt
+3. Open Graph tags for social sharing
+4. Canonical URLs
+5. 404 page
 
-Sprint 5:
-- Performance optimization
-- Lighthouse tuning
-- Final QA
+**Files:** `site/api.php`, all HTML pages (meta/schema), `site/sitemap.xml`
+**Acceptance:** Form sends email, Google Rich Results Test passes, proper meta on all pages
+**Risks:** Email deliverability from shared hosting — test thoroughly
 
-Each sprint must be atomic.
+### Sprint 6 — Performance, QA & Deploy
 
-IMPORTANT
+**Objective:** Final polish, performance tuning, deploy to production.
 
-- Do NOT write final Swedish copy yet.
-- Do NOT implement code.
-- Do NOT over-design.
-- Build a professional execution blueprint.
+**Tasks:**
+1. Lighthouse audit — target >= 90 on all metrics (mobile)
+2. Core Web Vitals check (LCP, FID, CLS)
+3. CSS/JS minification
+4. Image final optimization pass
+5. Cross-browser testing (Chrome, Firefox, Safari, mobile)
+6. Test admin panel with a board member
+7. Test form submission
+8. Test Three.js on multiple devices
+9. Create deploy script (`deploy.sh`)
+10. Deploy to staging first (optional: staging subdomain)
+11. Deploy to production (replace Sitejet content)
+12. Verify everything works live
+13. Update DNS/redirects if needed
 
-After generating the sprint roadmap and documentation,
-update Tasks.md and Memory.md accordingly.
+**Files:** All files, `deploy.sh`
+**Acceptance:** Live site passes Lighthouse >= 90, all features work, admin works
+**Risks:** Sitejet remnants causing conflicts — clean deploy, verify .htaccess
 
-End this session with:
-"SPRINT 0 READY FOR EXECUTION"
+## How to Start a New Sprint Session
+
+Each sprint session should:
+
+1. Read these files first: `plan.md`, `spec.md`, `tasks.md`, `memory.md`
+2. Check `git log` for latest state
+3. Review the sprint's tasks in `tasks.md`
+4. Execute the sprint
+5. Commit changes with descriptive message
+6. Update `tasks.md` (mark done, add new items if discovered)
+7. Update `memory.md` (decisions, issues, context for next sprint)
+8. End with clear status message
+
+## Current Status
+
+**Sprint 0: COMPLETED**
+**Next: Sprint 1 — Site Scaffold & Design System**

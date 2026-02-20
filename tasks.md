@@ -1,0 +1,77 @@
+# TASKS — naturhansyn.se Modernization
+
+## Sprint 0 — Discovery & Baseline
+- [x] Audit live site (all 6 pages)
+- [x] Identify actual platform (Sitejet, not WordPress)
+- [x] Download full site to local (`live-site/`)
+- [x] Initialize git repo with baseline commit
+- [x] Update spec.md with real architecture
+- [x] Update plan.md with realistic sprint roadmap
+- [x] Create tasks.md
+- [x] Create memory.md
+
+## Sprint 1 — Grav Setup & Design System
+- [ ] Install Grav CMS locally in `site/`
+- [ ] Install plugins: admin, form, email
+- [ ] Create custom `naturhansyn` Grav theme
+- [ ] Design system: CSS custom properties (colors, fonts, spacing)
+- [ ] Build header template (desktop nav + mobile hamburger)
+- [ ] Build footer template
+- [ ] Build homepage template + migrate content
+- [ ] Build about page template + migrate content (board members grid)
+- [ ] Build news page templates (listing + item) + migrate content
+- [ ] Build membership page template + migrate content
+- [ ] Build events page templates (listing + item) + migrate content
+- [ ] Build contact page template + migrate content
+- [ ] Migrate images from live-site/images/
+- [ ] Responsive design pass (mobile-first)
+- [ ] Semantic HTML audit (headings, landmarks, alt text)
+- [ ] Meta tags and Open Graph via Grav config
+- [ ] Test locally with PHP built-in server
+
+## Sprint 2 — Visual Polish & CTA Optimization
+- [ ] Hero section visual design
+- [ ] Typography scale refinement
+- [ ] Whitespace and spacing pass
+- [ ] CTA buttons ("Bli medlem" prominent)
+- [ ] News/event card components
+- [ ] Board member photo grid
+- [ ] Image optimization (compress, srcset, lazy load)
+- [ ] CSS scroll animations
+- [ ] Form styling
+- [ ] Swish payment section design
+
+## Sprint 3 — Three.js Progressive Enhancement
+- [ ] Self-host Three.js (minified, deferred)
+- [ ] Design hero scene concept
+- [ ] WebGL detection + fallback
+- [ ] Implement Three.js scene
+- [ ] prefers-reduced-motion support
+- [ ] Performance testing
+
+## Sprint 4 — Admin Panel Configuration & User Setup
+- [ ] Configure Grav admin (Swedish language, simple dashboard)
+- [ ] Create content blueprints (news item, event, board member)
+- [ ] Create admin user accounts for board members
+- [ ] Configure image upload settings
+- [ ] Configure email plugin for contact form
+- [ ] Test full admin workflow end-to-end
+- [ ] Write board member guide (Swedish)
+
+## Sprint 5 — Forms, SEO & Contact
+- [ ] Configure Grav form plugin for contact page
+- [ ] Schema.org markup (Organization, Event, ContactPage)
+- [ ] Meta descriptions per page
+- [ ] Internal linking
+- [ ] XML sitemap + robots.txt
+- [ ] 404 page
+
+## Sprint 6 — Performance, QA & Deploy
+- [ ] Lighthouse audit (target >= 90 mobile)
+- [ ] Cross-browser testing
+- [ ] CSS/JS minification
+- [ ] Deploy script
+- [ ] Deploy to production (replace Sitejet)
+- [ ] Disable Sitejet in cPanel (prevent overwrite)
+- [ ] Post-deploy verification
+- [ ] Verify revert strategy works

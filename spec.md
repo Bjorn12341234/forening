@@ -1,364 +1,267 @@
-████████████████████████████████████████████████████████████
-NATURHÄNSYN.SE — FULL TEKNISK SETUP MED CLAUDE CODE + THREE.JS
-Hosting: Hostup (cPanel Jupiter)
-User: sxesv
-Home: /home/sxesv
-Webroot: /home/sxesv/public_html
-Server IP: 185.113.11.31
-Stack: Apache + PHP 8.x + MySQL 8.x
-████████████████████████████████████████████████████████████
+# NATURHANSYN.SE — TECHNICAL SPECIFICATION
 
-SECTION 1 — AKTIVERA SSH
+## Server & Hosting
 
-1. cPanel → Security → SSH Access
-2. Enable SSH
-3. Manage SSH Keys
-4. Generate New Key
-   - RSA
-   - 4096 bits
-5. Authorize key
+- **Hosting:** Hostup (cPanel Jupiter)
+- **cPanel URL:** https://xi.hostup.se:2083
+- **User:** sxesv
+- **Home:** /home/sxesv
+- **Webroot:** /home/sxesv/public_html
+- **Server IP:** 185.113.11.31
+- **Stack:** Apache + PHP 8.1 + MySQL
+- **SSH:** `ssh sxesv@185.113.11.31`
+- **Server backup exists:** `backup_before_changes_2026-02-20.tar.gz` in home dir
 
-Download private key to your computer.
+## Current Platform: Sitejet (NOT WordPress)
 
-Connect from Linux Mint:
+The live site is built with **Sitejet**, a website builder integrated into Hostup's cPanel.
+There is NO WordPress installation. The ChatGPT spec was wrong about this.
 
-ssh sxesv@naturhansyn.se
+Sitejet works by:
+1. Admins edit pages via the Sitejet visual builder (accessed through cPanel)
+2. Sitejet exports/deploys static HTML to `public_html/`
+3. A PHP proxy (`api.php`) handles form submissions via Sitejet's API (`api.sitehub.io`)
 
-If port needed:
-ssh sxesv@naturhansyn.se -p 22
+### Current Site Structure on Server
 
-Confirm:
-pwd
-Should return:
-/home/sxesv
+```
+public_html/
+├── index.html                 # Homepage
+├── om-foereningen/index.html  # About the association
+├── nyheter/index.html         # News
+├── medlemskap/index.html      # Membership
+├── event/index.html           # Events
+├── kontakta-oss/index.html    # Contact
+├── api.php                    # Sitejet form proxy + CDN image rewriter
+├── sitemap.xml                # XML sitemap
+├── .htaccess                  # Apache config (PHP 8.1)
+├── css/
+│   └── custom.250908185212.css   # Site-specific styles (239KB)
+├── js/
+│   └── custom.240419144240.js    # Menu + preset JS (8KB)
+├── g/
+│   ├── fonts.css                 # Google Fonts config
+│   └── static/                   # Font files (woff2)
+├── images/                       # Responsive images (43 subdirs, multiple sizes)
+├── bundles/
+│   └── flag-icon-css/            # Country flag icons
+└── webcard/                      # Sitejet rendering engine
+    ├── static/
+    │   ├── app.min.1757408874.css    # Sitejet framework CSS
+    │   ├── app.bundle.1757408891.js  # Sitejet framework JS
+    │   └── [code-split chunks].js
+    └── vendor/
+        └── slick/                    # Carousel library
+```
 
+### Current Design Details
 
-SECTION 2 — WORDPRESS ROOT
+- **Primary color:** #344642 (dark teal/green)
+- **Background:** Light mint/off-white on content pages, dark green on hero/header/footer
+- **Fonts:** Urbanist (body, 300-700 weights) + Kaushan Script (accent/decorative)
+- **Responsive breakpoints:** 975px, 575px
+- **Layout:** Flexbox-based, Sitejet preset components
+- **Navigation:** Hamburger menu only (no visible desktop nav bar)
+- **Footer:** Facebook link + email (naturhansyn@gmail.com)
 
-cd public_html
-ls
+### Sitejet Internal IDs
 
-You must see:
-wp-admin
-wp-content
-wp-includes
+- Website/webcard ID: `626980`
+- API host: `api.sitehub.io`
+- CDN: `inter-cdn.com` (multiple hosts)
 
-That is WordPress root.
+## Content Inventory
 
+### Homepage (/)
+- Hero: Forest landscape photo (by Myrra Romberg), tagline "Naturhänsyn - för allas vår skull!"
+- Mission statement text
+- "Vad gör vi?" section — 4 pillars with icons:
+  - Bevakar (monitors forestry reports)
+  - Bestrider (contests logging in protected areas)
+  - Folkbildar (educates members and public)
+  - Påverkar (advocates to landowners, companies, authorities)
+- Footer: Facebook + email + copyright
 
-SECTION 3 — BACKUP BEFORE TOUCHING ANYTHING
+### About (/om-foereningen/)
+- Photo of logged trees (by Emma Sewell)
+- Description of the association's mission
+- Note about being a new association
+- **Board members (Styrelsen 2024):** 6 people with photos and roles
+  - Emma Sewell (Ordförande), Myrra Romberg (Sekreterare),
+    Miguel Silveira Freitas (Kassör), Anton Lunberg (Ledamot),
+    Meandra Sewell (Ledamot), Sarah Svensson (Suppleant)
 
-Inside cPanel:
-Backup → Download Full Account Backup
+### News (/nyheter/)
+- "Vad händer just nu?" heading
+- Gotland meetup announcement (Oct 3-9)
+- Swish QR code for payments
 
-OR via SSH:
+### Membership (/medlemskap/)
+- "Bli medlem!" heading with heart stone photo
+- Membership fee: 100kr/year, 50kr/year for family members
+- Payment via Swish to 123-2485159
+- GDPR notice about data handling
+- Donation option
 
+### Events (/event/)
+- Annual meeting (Årsmöte) 2025 — March 26, 19:00, digital
+- Event poster image
+
+### Contact (/kontakta-oss/)
+- "Vi blir jätteglada om du vill höra av dig!" heading
+- Email keyboard photo
+- Contact info
+
+## Local Development Setup
+
+- **Local project:** `/home/bjorn/projects/forening/`
+- **Live site snapshot:** `live-site/` (downloaded 2026-02-20, 605 files, 23MB)
+- **Git:** Initialized with baseline commit `ca3fa10`
+- **Sensitive files:** `password.md` excluded via `.gitignore`
+
+## Architecture Decision: What Replaces Sitejet
+
+### The Problem
+
+Other admins (board members) currently edit the site through Sitejet's visual builder
+in cPanel. If we replace Sitejet with a custom-built site, they need a way to update
+content (news, events, board members) without touching code.
+
+### The Solution: Grav CMS + Custom Theme with Three.js
+
+Use **Grav CMS** (https://getgrav.org) — a free, open-source, flat-file PHP CMS.
+We build a fully custom Grav theme with Three.js. Board members use Grav's admin panel.
+
+Why Grav:
+- Free, open source, PHP-based — runs on existing server (no new software)
+- Flat-file: content stored as markdown files (no database, git-friendly)
+- Proven admin panel plugin (secure, multi-user, tested by community)
+- Full theme freedom — we control all HTML/CSS/JS including Three.js
+- Handles image uploads, user management, content versioning
+- Active community, regular security updates
+- We don't build/maintain admin infrastructure — just the theme
+
+What board members get:
+- Login at `naturhansyn.se/admin/`
+- Simple form-based editor: write text, upload images, hit save
+- Add/edit news, events, board members
+- No complex drag-and-drop they don't need
+
+What we control:
+- The entire visual design (custom Grav theme)
+- Three.js integration
+- Layout, typography, responsiveness
+- SEO, performance, everything
+
+### New Site Structure (Target)
+
+```
+public_html/                          # Grav CMS root
+├── index.php                         # Grav entry point
+├── .htaccess                         # Apache rewrite rules
+├── system/                           # Grav core (don't touch)
+├── vendor/                           # PHP dependencies
+├── bin/                              # Grav CLI tools
+├── user/
+│   ├── config/                       # Site configuration
+│   │   └── site.yaml                 # Site name, metadata, etc.
+│   ├── pages/                        # Content (markdown files)
+│   │   ├── 01.home/
+│   │   │   └── default.md            # Homepage content
+│   │   ├── 02.om-foereningen/
+│   │   │   └── default.md            # About page content
+│   │   ├── 03.nyheter/
+│   │   │   ├── blog.md               # News listing page
+│   │   │   └── gotland-traff/
+│   │   │       └── item.md           # Individual news item
+│   │   ├── 04.medlemskap/
+│   │   │   └── default.md            # Membership page
+│   │   ├── 05.event/
+│   │   │   ├── blog.md               # Events listing page
+│   │   │   └── arsmote-2025/
+│   │   │       └── item.md           # Individual event
+│   │   └── 06.kontakta-oss/
+│   │       └── default.md            # Contact page
+│   ├── themes/
+│   │   └── naturhansyn/              # OUR CUSTOM THEME
+│   │       ├── naturhansyn.yaml      # Theme config
+│   │       ├── templates/            # Twig templates
+│   │       │   ├── default.html.twig
+│   │       │   ├── blog.html.twig
+│   │       │   ├── item.html.twig
+│   │       │   └── partials/
+│   │       │       ├── header.html.twig
+│   │       │       └── footer.html.twig
+│   │       ├── css/
+│   │       │   └── main.css          # Modern custom stylesheet
+│   │       ├── js/
+│   │       │   ├── three.min.js      # Three.js (deferred)
+│   │       │   ├── scene.js          # Three.js hero scene
+│   │       │   └── main.js           # Site interactions
+│   │       ├── images/               # Theme images
+│   │       └── fonts/                # Self-hosted fonts
+│   ├── plugins/
+│   │   ├── admin/                    # Admin panel plugin
+│   │   ├── email/                    # Email plugin (for contact form)
+│   │   └── form/                     # Form handling plugin
+│   └── data/                         # User uploads, logs
+├── images/                           # Uploaded content images
+├── backup/                           # Grav backups
+└── cache/                            # Grav cache (auto-generated)
+```
+
+## Deploy Workflow
+
+1. Develop locally in `/home/bjorn/projects/forening/site/`
+2. Test locally with PHP built-in server: `php -S localhost:8000`
+3. Commit to git
+4. Deploy to server: `rsync -avz --exclude='.git' --exclude='cache/*' site/ sxesv@185.113.11.31:public_html/`
+5. Rollback if needed: see Revert Strategy below
+
+## Revert Strategy (CRITICAL)
+
+At any point we can restore the site to its current Sitejet state:
+
+### Method 1 — From local git (fastest)
+```bash
+# The live-site/ directory contains the exact Sitejet snapshot
+rsync -avz --delete live-site/ sxesv@185.113.11.31:public_html/
+```
+
+### Method 2 — From server backup
+```bash
+# Server has a full backup at /home/sxesv/backup_before_changes_2026-02-20.tar.gz
+ssh sxesv@185.113.11.31
 cd ~
-tar -czf backup_$(date +%F).tar.gz public_html
-
-
-SECTION 4 — GIT ENABLED WORKFLOW (PROFESSIONAL SETUP)
-
-Inside /home/sxesv:
-
-mkdir projects
-cd projects
-mkdir naturhansyn-theme-dev
-cd naturhansyn-theme-dev
-git init
-
-This is your Claude Code working directory.
-
-You do NOT develop directly in live public_html.
-
-You build theme here and then deploy.
-
-
-SECTION 5 — CREATE CUSTOM WORDPRESS THEME
-
-Structure:
-
-naturhansyn-theme/
-│
-├── style.css
-├── functions.php
-├── index.php
-├── header.php
-├── footer.php
-├── front-page.php
-├── assets/
-│   ├── css/
-│   ├── js/
-│   │   ├── three.module.js
-│   │   └── scene.js
-│   └── textures/
-└── screenshot.png
-
-
-style.css header must contain:
-
-/*
-Theme Name: Naturhänsyn Custom
-Theme URI: https://naturhansyn.se
-Author: Naturhänsyn
-Version: 1.0
-*/
-
-
-SECTION 6 — ENQUEUE THREE.JS PROPERLY
-
-functions.php:
-
-function naturhansyn_enqueue_scripts() {
-
-    wp_enqueue_script(
-        'three-js',
-        'https://unpkg.com/three@0.160.0/build/three.module.js',
-        array(),
-        null,
-        true
-    );
-
-    wp_enqueue_script(
-        'naturhansyn-scene',
-        get_template_directory_uri() . '/assets/js/scene.js',
-        array('three-js'),
-        null,
-        true
-    );
-
-}
-
-add_action('wp_enqueue_scripts', 'naturhansyn_enqueue_scripts');
-
-
-SECTION 7 — MINIMAL THREE.JS SCENE
-
-assets/js/scene.js:
-
-import * as THREE from 'three';
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-const geometry = new THREE.PlaneGeometry(10, 10, 32, 32);
-const material = new THREE.MeshStandardMaterial({ color: 0x2f5d3a });
-const plane = new THREE.Mesh(geometry, material);
-
-scene.add(plane);
-
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(0, 10, 10);
-scene.add(light);
-
-camera.position.z = 5;
-
-function animate() {
-    requestAnimationFrame(animate);
-    plane.rotation.x += 0.001;
-    renderer.render(scene, camera);
-}
-
-animate();
-
-
-SECTION 8 — DEPLOY THEME TO LIVE SITE
-
-From SSH:
-
-cd /home/sxesv/projects/naturhansyn-theme-dev
-cp -r naturhansyn-theme /home/sxesv/public_html/wp-content/themes/
-
-Then:
-
-Login to:
-https://naturhansyn.se/wp-admin
-
-Appearance → Themes
-Activate "Naturhänsyn Custom"
-
-
-SECTION 9 — OPTIONAL ADVANCED ARCHITECTURE (HEADLESS MODE)
-
-If you want proper modern frontend:
-
-1. Keep WordPress as CMS only
-2. Enable REST API
-3. Build frontend separately using:
-
-npm create vite@latest naturhansyn-frontend
-cd naturhansyn-frontend
-npm install three axios
-
-4. Fetch content from:
-
-https://naturhansyn.se/wp-json/wp/v2/pages
-
-5. Deploy frontend as static build to:
-public_html/app/
-
-This isolates PHP from frontend completely.
-
-
-SECTION 10 — SECURITY HARDENING
-
-- Disable file editing in WP:
-  Add to wp-config.php:
-
-  define('DISALLOW_FILE_EDIT', true);
-
-- Install Wordfence or equivalent
-- Enable HTTPS redirect
-- Turn on Cloudflare only after testing
-
-
-SECTION 11 — CLAUDE CODE WORKFLOW
-
-Inside your local clone or SSH session:
-
-1. Claude edits theme files
-2. Test in staging folder:
-   /home/sxesv/staging/
-3. Commit changes:
-
-   git add .
-   git commit -m "Add Three.js hero scene"
-
-4. Deploy manually to live
-
-Never develop directly in public_html without backup.
-
-
-SECTION 12 — WHAT NOT TO DO
-
-- Do NOT use Sitejet
-- Do NOT modify WordPress core
-- Do NOT install heavy visual builders if using Three.js
-- Do NOT mix 3D canvas with random theme JS conflicts
-
-
-FINAL STATE
-
-You now have:
-
-✓ SSH access
-✓ Version controlled theme
-✓ Custom Three.js integration
-✓ Clean WordPress backend
-✓ Safe deploy strategy
-✓ Scalable architecture
-
-████████████████████████████████████████████████████████████
-
-If you want next level:
-I can now give you a fully designed 3D forest hero scene concept tailored to Naturhänsyn’s mission.
-
-Just say:
-"Design the 3D experience."
-
----
-
-I tried this but im not sure i will destory anything.
-bjorn@bjorn:~$ ssh sxesv@185.113.11.31
-The authenticity of host '185.113.11.31 (185.113.11.31)' can't be established.
-ED25519 key fingerprint is SHA256:n6IAmKNFbtYm7YYHtKaiYHOdS2UmY3cf2f+KtIy9dQg.
-This key is not known by any other names.
-Are you sure you want to continue connecting (yes/no/[fingerprint])? 
-
----
-
-we need to make everything local first and commiting steps on the way so we can revert if needed. i dont want to destory the current site that my friend has. im helping her with the site to modernize it. all the current features. just better looking.
-
----
-
-chat gpt said this.
-
-OPTION 1 — Spegla hela WordPress lokalt
-
-Via SSH:
-
-scp -r sxesv@185.113.11.31:/home/sxesv/public_html ~/naturhansyn-live
-
-Nu har du hela sajten lokalt.
-
-Sedan:
-
-cd ~/naturhansyn-live
-git init
-git add .
-git commit -m "Initial backup of live site"
-
-Nu kan du:
-
-Ändra filer
-
-Köra Claude Code i den mappen
-
-Versionera allt
-
-Deploy tillbaka:
-
-scp -r * sxesv@185.113.11.31:/home/sxesv/public_html
-
-Men detta är lite farligt om du inte är försiktig.
-
-OPTION 2 — Rätt sätt (rekommenderat)
-
-Du utvecklar ENDAST ett custom theme lokalt.
-
-Du rör inte WordPress core.
-
-Så här:
-
-Ladda ner endast:
-wp-content/themes/
-
-Skapa nytt tema lokalt:
-naturhansyn-theme/
-
-Git-versionera bara temat.
-
-Deploy endast temat till:
-
-/wp-content/themes/
-
-Det är säkrare.
-
-Ja, Git gör att du kan revert
-
-Exempel:
-
-git log
-git checkout <commit-id>
-
-eller:
-
-git revert HEAD
-
-Så länge du inte deployar över allt slarvigt är du säker.
-
-Extra säkerhet (mycket viktigt)
-
-Innan du gör något:
-
-I cPanel:
-
-Backup → Download Full Account Backup
-
-Detta är din fail-safe.
-
-Vad jag rekommenderar för dig
-
-Eftersom du vill använda Three.js och experimentera:
-
-→ Bygg ett nytt tema lokalt
-→ Git-versionera det
-→ Deploya bara temat
-→ Aktivera temat i WordPress
-
-Det är säkert, rent och revertbart.
-
+rm -rf public_html/*
+tar -xzf backup_before_changes_2026-02-20.tar.gz
+```
+
+### Method 3 — Sitejet republish
+If Sitejet CMS is still connected, admins can republish from cms.sitehub.io/626980
+which regenerates the original site.
+
+### Rules
+- NEVER delete `live-site/` from the local repo
+- NEVER delete the server backup tar.gz
+- NEVER deploy to production until fully tested
+- The baseline git commit `ca3fa10` always has the original Sitejet site
+
+## Performance Targets
+
+- Lighthouse mobile score >= 90
+- Three.js must not block initial render (deferred, progressive enhancement)
+- WebGL fallback: static hero image if WebGL unavailable
+- No heavy animation loops
+- All JS deferred
+- Images optimized and lazy-loaded
+- Self-hosted fonts (no Google Fonts CDN calls)
+
+## What NOT To Do
+
+- Do NOT use WordPress
+- Do NOT use Sitejet going forward
+- Do NOT use heavy frameworks (React, Vue, etc.) — this is a 6-page site
+- Do NOT install visual page builders
+- Do NOT deploy without backup + git commit
+- Do NOT develop directly on the live server
