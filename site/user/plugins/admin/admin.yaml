@@ -14,9 +14,9 @@ dashboard:
   days_of_stats: 7
 widgets_display:
   dashboard-maintenance: true
-  dashboard-statistics: true
-  dashboard-notifications: true
-  dashboard-feed: true
+  dashboard-statistics: false
+  dashboard-notifications: false
+  dashboard-feed: false
   dashboard-pages: true
 pages:
   show_parents: both
@@ -25,14 +25,14 @@ session:
   timeout: 1800
 edit_mode: normal
 frontend_preview_target: inline
-show_github_msg: true
+show_github_msg: false
 admin_icons: line-awesome
-enable_auto_updates_check: true
+enable_auto_updates_check: false
 notifications:
-  feed: true
+  feed: false
   dashboard: true
-  plugins: true
-  themes: true
+  plugins: false
+  themes: false
 popularity:
   enabled: true
   ignore: ['/test*','/modular']

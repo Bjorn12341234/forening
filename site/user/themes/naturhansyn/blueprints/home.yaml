@@ -1,0 +1,44 @@
+title: Startsida
+'@extends':
+  type: default
+  context: 'blueprints://pages'
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: Innehåll
+          fields:
+            header.hero_text:
+              type: textarea
+              label: Herotext
+              help: Texten som visas i herosektionen på startsidan
+              rows: 3
+              validate:
+                required: true
+
+            header.pillars:
+              type: list
+              label: Fyra pelare
+              help: De fyra pelarna som beskriver föreningens verksamhet
+              style: vertical
+              fields:
+                .icon:
+                  type: text
+                  label: Ikon (emoji)
+                  help: 'En emoji som representerar pelaren, t.ex. &#x1F50D;'
+                .title:
+                  type: text
+                  label: Rubrik
+                  validate:
+                    required: true
+                .text:
+                  type: textarea
+                  label: Beskrivning
+                  rows: 3
+                  validate:
+                    required: true

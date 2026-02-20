@@ -1,6 +1,8 @@
 enabled: true
-from:
-to:
+from: naturhansyn@gmail.com
+from_name: NaturHänsyn Webbplats
+to: naturhansyn@gmail.com
+to_name: Föreningen NaturHänsyn
 mailer:
   engine: sendmail
   smtp:

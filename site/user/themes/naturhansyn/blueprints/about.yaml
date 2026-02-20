@@ -1,0 +1,83 @@
+title: Om föreningen
+'@extends':
+  type: default
+  context: 'blueprints://pages'
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: Innehåll
+          fields:
+            header.subtitle:
+              type: text
+              label: Underrubrik
+              help: Visas under sidrubriken
+
+            header.hero_image:
+              type: filepicker
+              label: Huvudbild
+              preview_images: true
+              folder: 'theme://images/content'
+              accept:
+                - image/*
+
+            header.hero_image_alt:
+              type: text
+              label: Bildtext (alt)
+              help: Beskrivning av bilden för tillgänglighet
+
+            header.hero_image_credit:
+              type: text
+              label: Fotograf
+              help: 'Namn på fotografen, visas under bilden'
+
+            header.board_title:
+              type: text
+              label: Styrelserubrik
+              help: 'T.ex. "Styrelsen 2024"'
+              default: Styrelsen
+
+            header.board_members:
+              type: list
+              label: Styrelsemedlemmar
+              style: vertical
+              fields:
+                .name:
+                  type: text
+                  label: Namn
+                  validate:
+                    required: true
+                .role:
+                  type: text
+                  label: Roll
+                  help: 'T.ex. Ordförande, Sekreterare, Kassör, Ledamot, Suppleant'
+                  validate:
+                    required: true
+                .photo:
+                  type: filepicker
+                  label: Foto
+                  preview_images: true
+                  folder: 'theme://images/board'
+                  accept:
+                    - image/*
+
+            header.documents:
+              type: list
+              label: Dokument
+              help: Länkar till dokument (stadgar, verksamhetsplan etc.)
+              style: vertical
+              fields:
+                .title:
+                  type: text
+                  label: Dokumenttitel
+                .file:
+                  type: filepicker
+                  label: Fil
+                  folder: 'self@'
+                  accept:
+                    - application/pdf

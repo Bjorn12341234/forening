@@ -1,0 +1,40 @@
+title: Nyheter / Händelser
+'@extends':
+  type: default
+  context: 'blueprints://pages'
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: Innehåll
+          fields:
+            header.subtitle:
+              type: text
+              label: Underrubrik
+              help: Visas under sidrubriken
+
+            header.content.items:
+              type: hidden
+              default:
+                '@self.children': ''
+
+            header.content.order.by:
+              type: select
+              label: Sortera efter
+              default: date
+              options:
+                date: Datum
+                title: Titel
+
+            header.content.order.dir:
+              type: select
+              label: Sorteringsordning
+              default: desc
+              options:
+                desc: Nyast först
+                asc: Äldst först

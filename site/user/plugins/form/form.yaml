@@ -7,14 +7,15 @@ debug: false
 inline_errors: false
 modular_form_fix: true
 files:
-  multiple: false          # To allow multiple files, default is single
-  limit: 10                # Number of allowed files per field (multiple required)
-  destination: 'self@'     # Where to upload the files (path and self@, page@, theme@)
-  avoid_overwriting: false # Prevent files with the same name to be overridden. Date prefix will be added
-  random_name: false       # Generate a random 15 long string name for the uploaded files
-  filesize: 0              # Maximum file size allowed (in MB)
-  accept:                  # List of mime/types or file extensions allowed (ie, image/*,.zip,.mp4)
+  multiple: false
+  limit: 5
+  destination: 'self@'
+  avoid_overwriting: true
+  random_name: false
+  filesize: 5
+  accept:
     - image/*
+    - application/pdf
 recaptcha:
     version: 2-checkbox
     theme: light

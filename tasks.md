@@ -51,13 +51,13 @@
 - [x] Hero subtitle color fix (white for readability)
 
 ## Sprint 4 — Admin Panel Configuration & User Setup
-- [ ] Configure Grav admin (Swedish language, simple dashboard)
-- [ ] Create content blueprints (news item, event, board member)
-- [ ] Create admin user accounts for board members
-- [ ] Configure image upload settings
-- [ ] Configure email plugin for contact form
-- [ ] Test full admin workflow end-to-end
-- [ ] Write board member guide (Swedish)
+- [x] Configure Grav admin (Swedish UI via user lang, simplified dashboard widgets)
+- [x] Create content blueprints (home, about, blog, item, membership, contact)
+- [x] Create admin user accounts (emma=admin, myrra=editor, miguel=editor)
+- [x] Configure image upload settings (5MB limit, image/* + PDF)
+- [x] Configure email plugin (from/to naturhansyn@gmail.com, sendmail)
+- [x] Test full admin workflow end-to-end (login, pages, blueprints, frontend)
+- [x] Write board member guide in Swedish (admin-guide.md)
 
 ## Sprint 5 — Forms, SEO & Contact
 - [ ] Configure Grav form plugin for contact page

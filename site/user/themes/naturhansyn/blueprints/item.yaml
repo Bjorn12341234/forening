@@ -1,0 +1,36 @@
+title: Nyhetsartikel / Händelse
+'@extends':
+  type: default
+  context: 'blueprints://pages'
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: Innehåll
+          fields:
+            header.date:
+              type: datetime
+              label: Datum
+              help: Datum för nyheten eller händelsen
+              validate:
+                required: true
+              format: 'Y-m-d'
+
+            header.image:
+              type: filepicker
+              label: Bild
+              help: Valfri bild som visas överst i artikeln
+              preview_images: true
+              folder: 'theme://images/content'
+              accept:
+                - image/*
+
+            header.image_credit:
+              type: text
+              label: Fotograf
+              help: 'Namn på fotografen, visas under bilden'

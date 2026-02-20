@@ -207,10 +207,62 @@ scene.js (ES module)
 - `templates/home.html.twig` — Canvas element in CTA section, script module tag
 
 ### Next Sprint Context
-**Sprint 4** — Admin Panel Configuration & User Setup:
-1. Configure Grav admin panel (Swedish language, simple dashboard)
-2. Create content blueprints (news item, event, board member)
-3. Create admin accounts for board members
-4. Configure image uploads and email plugin
-5. Test full admin workflow
-6. Write board member guide (Swedish)
+**Sprint 4** — Admin Panel Configuration & User Setup
+
+## Sprint 4 — Admin Panel Configuration & User Setup (2026-02-20)
+
+### What Was Done
+- Configured admin panel: Swedish UI (via user `language: sv`), simplified dashboard
+- Disabled noisy widgets (statistics, feed, notifications, GitHub msg, auto-updates)
+- Created 6 custom page blueprints in `themes/naturhansyn/blueprints/`:
+  - home.yaml (hero_text textarea, pillars list with icon/title/text)
+  - about.yaml (subtitle, hero_image filepicker, board_members list, documents list)
+  - blog.yaml (subtitle, sort order config)
+  - item.yaml (date picker, image filepicker, photographer credit)
+  - membership.yaml (subtitle, swish_qr/donation_qr filepickers)
+  - contact.yaml (subtitle, contact_image filepicker)
+- Created 3 admin accounts:
+  - emma (Ordförande) — full admin (`admin.super: true`)
+  - myrra (Sekreterare) — editor (`admin.pages: true`)
+  - miguel (Kassör) — editor (`admin.pages: true`)
+- Configured email plugin: from/to naturhansyn@gmail.com, sendmail engine
+- Configured form plugin: 5MB file limit, image/* + PDF, avoid overwriting
+- Added media.yaml config: 5MB upload limit
+- Tested full admin workflow: login, page editing, blueprint fields, frontend rendering
+- Wrote Swedish board member guide (admin-guide.md at project root)
+
+### Key Decisions
+1. **No languages.supported in system.yaml** — Sprint 1 discovered this adds `/sv/` URL prefix. Admin language is set per-user via `language: sv` in account YAML.
+2. **Blueprints use `@extends: default`** — Inherits standard Grav fields (title, content, published) and adds custom fields below. Works seamlessly.
+3. **Filepicker for images** — Points to `theme://images/content` and `theme://images/board` folders. Admin can browse existing images or reference uploaded ones.
+4. **Three permission levels** — super admin (emma, admin), editor with pages-only (myrra, miguel). Editors can't modify plugins, themes, or system config.
+5. **Placeholder emails for accounts** — Using emma/myrra/miguel@naturhansyn.se. Update with real emails before deploy.
+6. **Placeholder passwords** — All accounts have temporary passwords. Board members should change on first login.
+
+### Technical Notes
+- Blueprints live in `site/user/themes/naturhansyn/blueprints/` (filename must match template name)
+- `filepicker` field type with `folder: 'theme://images/...'` lets admins browse theme image directories
+- `list` field type creates repeatable field groups (used for pillars, board_members, documents)
+- Admin dashboard widgets controlled via `widgets_display` in admin.yaml
+- Account permissions: `admin.login` + `admin.pages` = editor, `admin.super` = full admin
+
+### Files Changed
+- `site/user/config/system.yaml` — no language changes (intentional)
+- `site/user/config/media.yaml` — new, 5MB upload limit
+- `site/user/plugins/admin/admin.yaml` — simplified dashboard, disabled notifications
+- `site/user/plugins/email/email.yaml` — from/to configured
+- `site/user/plugins/form/form.yaml` — 5MB limit, PDF support, avoid overwriting
+- `site/user/themes/naturhansyn/blueprints/` — 6 new blueprint YAML files
+- `site/user/accounts/emma.yaml` — new admin account
+- `site/user/accounts/myrra.yaml` — new editor account
+- `site/user/accounts/miguel.yaml` — new editor account
+- `admin-guide.md` — new Swedish guide for board members
+
+### Next Sprint Context
+**Sprint 5** — Forms, SEO & Contact:
+1. Configure Grav form plugin for contact page (form definition in frontmatter)
+2. Schema.org markup (Organization, Event, ContactPage)
+3. Meta descriptions per page
+4. Internal linking
+5. XML sitemap + robots.txt
+6. 404 page

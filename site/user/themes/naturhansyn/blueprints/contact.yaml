@@ -1,0 +1,27 @@
+title: Kontakt
+'@extends':
+  type: default
+  context: 'blueprints://pages'
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: Innehåll
+          fields:
+            header.subtitle:
+              type: text
+              label: Underrubrik
+              help: Visas under sidrubriken
+
+            header.contact_image:
+              type: filepicker
+              label: Kontaktbild
+              preview_images: true
+              folder: 'theme://images/content'
+              accept:
+                - image/*
