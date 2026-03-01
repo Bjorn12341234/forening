@@ -1,6 +1,8 @@
 ---
 title: Nyheter
 subtitle: 'Vad händer just nu?'
+metadata:
+  description: 'Senaste nyheterna från Föreningen NaturHänsyn. Läs om vårt arbete för att skydda värdefull natur och biologisk mångfald.'
 content:
   items:
     '@self.children': ''

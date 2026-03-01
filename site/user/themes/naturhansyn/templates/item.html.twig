@@ -1,6 +1,26 @@
 {% extends 'partials/base.html.twig' %}
 {% import 'partials/macros.html.twig' as macros %}
 
+{% block structured_data %}
+{% if page.parent.slug == 'event' and page.date %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "{{ page.title }}",
+  "startDate": "{{ page.date|date('Y-m-d') }}",
+  "url": "{{ page.url(true) }}",
+  "organizer": {
+    "@type": "NGO",
+    "name": "Föreningen NaturHänsyn",
+    "url": "{{ base_url_absolute }}"
+  },
+  "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode"
+}
+</script>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="page-header">
   <div class="container">
@@ -26,9 +46,10 @@
       {{ page.content|raw }}
     </div>
 
-    <p style="margin-top: var(--space-2xl);">
-      <a href="{{ page.parent.url }}">&larr; Tillbaka</a>
-    </p>
+    <div style="margin-top: var(--space-2xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
+      <a href="{{ page.parent.url }}">&larr; Tillbaka till {{ page.parent.title }}</a>
+      <a href="/medlemskap" class="btn btn--primary btn--sm">Bli medlem</a>
+    </div>
   </div>
 </section>
 {% endblock %}

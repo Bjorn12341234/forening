@@ -4,20 +4,64 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title|default('NaturHänsyn') }}</title>
-  <meta name="description" content="{{ page.summary ? page.summary|striptags|truncate(160) : site.metadata.description|default('Föreningen NaturHänsyn arbetar för att skydda värdefull natur i Sverige.') }}">
+  {% set meta_desc = page.header.metadata.description|default(page.summary|striptags|slice(0, 160) ~ '…')|default(site.metadata.description)|default('Föreningen NaturHänsyn arbetar för att skydda värdefull natur i Sverige.') %}
+  <meta name="description" content="{{ meta_desc }}">
 
   {# Open Graph #}
   <meta property="og:title" content="{{ page.title|default(site.title) }}">
-  <meta property="og:description" content="{{ page.summary ? page.summary|striptags|truncate(160) : site.metadata.description|default('') }}">
+  <meta property="og:description" content="{{ meta_desc }}">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url(true) }}">
   <meta property="og:locale" content="sv_SE">
+  <meta property="og:site_name" content="Föreningen NaturHänsyn">
 
-  {# Fonts & Styles #}
-  <link rel="stylesheet" href="{{ url('theme://css/fonts.css') }}">
-  <link rel="stylesheet" href="{{ url('theme://css/main.css') }}">
+  {# Canonical URL #}
+  <link rel="canonical" href="{{ page.url(true) }}">
+
+  {# Preload critical font #}
+  <link rel="preload" href="{{ url('theme://fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') }}" as="font" type="font/woff2" crossorigin>
+
+  {# Fonts (inlined to avoid render-blocking request) #}
+  <style>
+  @font-face{font-family:'Urbanist';font-style:normal;font-weight:300;font-display:swap;src:url('{{ url('theme://fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') }}') format('woff2')}
+  @font-face{font-family:'Urbanist';font-style:normal;font-weight:400;font-display:swap;src:url('{{ url('theme://fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') }}') format('woff2')}
+  @font-face{font-family:'Urbanist';font-style:normal;font-weight:500;font-display:swap;src:url('{{ url('theme://fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') }}') format('woff2')}
+  @font-face{font-family:'Urbanist';font-style:normal;font-weight:600;font-display:swap;src:url('{{ url('theme://fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') }}') format('woff2')}
+  @font-face{font-family:'Urbanist';font-style:normal;font-weight:700;font-display:swap;src:url('{{ url('theme://fonts/urbanist/v17/L0x-DF02iFML4hGCyMqlbS0.woff2') }}') format('woff2')}
+  @font-face{font-family:'Kaushan Script';font-style:normal;font-weight:400;font-display:swap;src:url('{{ url('theme://fonts/kaushanscript/v19/vm8vdRfvXFLG3OLnsO15WYS5DG74wNI.woff2') }}') format('woff2')}
+  </style>
+
+  {# Styles #}
+  <link rel="stylesheet" href="{{ url('theme://css/main.min.css') }}">
+
+  {# Preload LCP hero image on homepage #}
+  {% block preload %}{% endblock %}
 
   {# Favicon #}
   <link rel="icon" type="image/png" href="{{ url('theme://images/logo.png') }}">
+
+  {# Schema.org — Organization (site-wide) #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "name": "Föreningen NaturHänsyn",
+    "url": "{{ base_url_absolute }}",
+    "logo": "{{ url('theme://images/logo.png', true) }}",
+    "email": "naturhansyn@gmail.com",
+    "description": "{{ site.metadata.description|default('Föreningen NaturHänsyn arbetar för att skydda värdefull natur i Sverige.') }}",
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61558332027547"
+    ],
+    "areaServed": {
+      "@type": "Country",
+      "name": "Sverige"
+    }
+  }
+  </script>
+
+  {# Page-specific structured data #}
+  {% block structured_data %}{% endblock %}
 
   {% block head %}{% endblock %}
 </head>
@@ -31,7 +75,7 @@
 
   {% include 'partials/footer.html.twig' %}
 
-  <script src="{{ url('theme://js/main.js') }}" defer></script>
+  <script src="{{ url('theme://js/main.min.js') }}" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

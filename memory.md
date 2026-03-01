@@ -259,10 +259,68 @@ scene.js (ES module)
 - `admin-guide.md` — new Swedish guide for board members
 
 ### Next Sprint Context
-**Sprint 5** — Forms, SEO & Contact:
-1. Configure Grav form plugin for contact page (form definition in frontmatter)
-2. Schema.org markup (Organization, Event, ContactPage)
-3. Meta descriptions per page
-4. Internal linking
-5. XML sitemap + robots.txt
-6. 404 page
+**Sprint 5** — Forms, SEO & Contact
+
+## Sprint 5 — Forms, SEO & Contact (2026-02-20)
+
+### What Was Done
+- Configured Grav form plugin for contact page with form definition in frontmatter
+  - Fields: name, email, subject, message + honeypot anti-spam
+  - Process: email notification + save to file + success message
+  - Disabled form plugin's built-in CSS (using our own styles)
+  - Swedish labels and messages
+- Added Schema.org JSON-LD structured data:
+  - NGO schema (site-wide, in base.html.twig)
+  - AboutPage + Person schema (about page, board members)
+  - ContactPage schema (contact page)
+  - Event schema (event items, conditional on parent slug)
+- Added explicit meta descriptions to all 6 page frontmatters
+- Updated base.html.twig: canonical URLs, og:url, og:site_name, better meta description priority
+- Added internal cross-links between pages:
+  - About → membership, contact, news, events
+  - Membership → contact, about, Facebook
+  - Contact → membership, about
+  - Blog/Events listings → membership, contact
+  - Item pages → back to parent + membership CTA
+- Installed Grav sitemap plugin (v5.1.0), configured with monthly changefreq
+- Added Sitemap reference to robots.txt
+- Created 404 error page (error.html.twig) with Swedish text, links to home + contact
+
+### Technical Notes
+- Grav form plugin uses specific CSS classes: `.form-wrapper`, `.form-field`, `.form-label`, `.form-data`, `.form-input-wrapper`, `.buttons .button`, `.form-honeybear`
+- We disabled `built_in_css` and `inline_css` in form.yaml — our main.css styles the form
+- The honeypot field uses class `.form-honeybear` — must hide via CSS when `inline_css: false`
+- Form submit button gets both `button` class (from Grav) and our custom `btn btn--primary` classes
+- Schema.org uses `@type: NGO` for the organization (more specific than Organization)
+- Event schema uses conditional `page.parent.slug == 'event'` to only show on event items
+- Meta description priority chain: `page.header.metadata.description` → `page.summary` → `site.metadata.description` → hardcoded fallback
+- Sitemap plugin config in `user/config/plugins/sitemap.yaml` (override, not editing plugin default)
+
+### Files Changed
+- `site/user/pages/06.kontakta-oss/contact.md` — form definition in frontmatter + meta description
+- `site/user/pages/01.home/home.md` — meta description
+- `site/user/pages/02.om-foereningen/about.md` — meta description
+- `site/user/pages/03.nyheter/blog.md` — meta description
+- `site/user/pages/04.medlemskap/membership.md` — meta description
+- `site/user/pages/05.event/blog.md` — meta description
+- `site/user/themes/naturhansyn/templates/partials/base.html.twig` — canonical, og:url, og:site_name, schema.org NGO, structured_data block
+- `site/user/themes/naturhansyn/templates/contact.html.twig` — form rendering, ContactPage schema, cross-links
+- `site/user/themes/naturhansyn/templates/about.html.twig` — AboutPage+Person schema, cross-links
+- `site/user/themes/naturhansyn/templates/item.html.twig` — Event schema, improved back-nav with CTA
+- `site/user/themes/naturhansyn/templates/blog.html.twig` — cross-links CTA section
+- `site/user/themes/naturhansyn/templates/membership.html.twig` — cross-links to contact/about
+- `site/user/themes/naturhansyn/templates/error.html.twig` — new 404 page
+- `site/user/themes/naturhansyn/css/main.css` — Grav form plugin styles, removed old .form-group styles
+- `site/user/plugins/form/form.yaml` — disabled built_in_css and inline_css
+- `site/user/config/plugins/sitemap.yaml` — new sitemap plugin config
+- `site/robots.txt` — added sitemap reference
+
+### Next Sprint Context
+**Sprint 6** — Performance, QA & Deploy:
+1. Lighthouse audit (target >= 90 mobile)
+2. Cross-browser testing
+3. CSS/JS minification
+4. Deploy script (rsync to server)
+5. Deploy to production
+6. Disable Sitejet in cPanel
+7. Post-deploy verification

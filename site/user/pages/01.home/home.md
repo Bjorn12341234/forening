@@ -1,5 +1,7 @@
 ---
 title: Hem
+metadata:
+  description: 'Föreningen NaturHänsyn arbetar för att skydda värdefull natur i Sverige genom bevakning, bestridande, folkbildning och påverkan. Bli medlem idag!'
 hero_text: 'Föreningen NaturHänsyn har som syfte att arbeta för att såväl markägare som skogsbolag och myndigheter tar sitt ansvar och visar Hänsyn till Naturen!'
 pillars:
   -

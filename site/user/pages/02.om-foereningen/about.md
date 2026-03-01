@@ -1,6 +1,8 @@
 ---
 title: 'Om föreningen'
 subtitle: 'Föreningen NaturHänsyn'
+metadata:
+  description: 'Lär känna Föreningen NaturHänsyn — vårt mål, våra medlemmar och styrelsen. Vi granskar avverkningar av skyddsvärd natur över hela Sverige.'
 hero_image: '/user/themes/naturhansyn/images/content/avverkningshoeg.jpg'
 hero_image_alt: 'Avverkningshög på Gotland'
 hero_image_credit: 'Emma Sewell'

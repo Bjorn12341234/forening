@@ -1,5 +1,22 @@
 {% extends 'partials/base.html.twig' %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "{{ page.title }}",
+  "url": "{{ page.url(true) }}",
+  "mainEntity": {
+    "@type": "NGO",
+    "name": "Föreningen NaturHänsyn",
+    "email": "naturhansyn@gmail.com",
+    "url": "{{ base_url_absolute }}"
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="page-header">
   <div class="container">
@@ -22,6 +39,12 @@
       {{ page.content|raw }}
     </div>
 
+    {# Contact Form #}
+    <div class="content-block mb-2xl fade-in">
+      <h2>Skicka ett meddelande</h2>
+      {% include "forms/form.html.twig" %}
+    </div>
+
     <div class="content-block fade-in">
       <h2>Kontaktuppgifter</h2>
       <p>
@@ -35,6 +58,10 @@
       <p style="margin-top: var(--space-xl); color: var(--color-text-muted); font-style: italic;">
         Vi återkopplar så fort vi har möjlighet! /Styrelsen
       </p>
+    </div>
+
+    <div class="content-block fade-in" style="margin-top: var(--space-2xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-border);">
+      <p>Vill du stötta vårt arbete? <a href="/medlemskap"><strong>Bli medlem</strong></a> — varje medlem gör skillnad! Läs mer <a href="/om-foereningen">om föreningen</a>.</p>
     </div>
   </div>
 </section>

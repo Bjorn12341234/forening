@@ -1,0 +1,15 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<section class="section" style="min-height: 60vh; display: flex; align-items: center;">
+  <div class="container container--narrow text-center">
+    <h1 style="font-size: var(--text-6xl); color: var(--color-accent); margin-bottom: var(--space-md);">404</h1>
+    <h2 style="margin-bottom: var(--space-xl);">Sidan kunde inte hittas</h2>
+    <p style="color: var(--color-text-muted); margin-bottom: var(--space-2xl);">Sidan du letar efter finns inte eller har flyttats. Kontrollera adressen eller gå tillbaka till startsidan.</p>
+    <div style="display: flex; gap: var(--space-lg); justify-content: center; flex-wrap: wrap;">
+      <a href="/" class="btn btn--primary">Till startsidan</a>
+      <a href="/kontakta-oss" class="btn btn--dark">Kontakta oss</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

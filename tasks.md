@@ -60,19 +60,51 @@
 - [x] Write board member guide in Swedish (admin-guide.md)
 
 ## Sprint 5 — Forms, SEO & Contact
-- [ ] Configure Grav form plugin for contact page
-- [ ] Schema.org markup (Organization, Event, ContactPage)
-- [ ] Meta descriptions per page
-- [ ] Internal linking
-- [ ] XML sitemap + robots.txt
-- [ ] 404 page
+- [x] Configure Grav form plugin for contact page (form in frontmatter, honeypot, Swedish labels)
+- [x] Schema.org markup (NGO site-wide, AboutPage+Person, ContactPage, Event)
+- [x] Meta descriptions per page (explicit metadata.description in all page frontmatter)
+- [x] Internal cross-links (membership↔contact, about→all, blog→membership, items→membership)
+- [x] XML sitemap + robots.txt (Grav sitemap plugin, robots.txt with sitemap reference)
+- [x] 404 page (error.html.twig with Swedish text, links to home + contact)
+- [x] Canonical URLs and og:url on all pages
+- [x] og:site_name added to Open Graph tags
 
 ## Sprint 6 — Performance, QA & Deploy
-- [ ] Lighthouse audit (target >= 90 mobile)
-- [ ] Cross-browser testing
-- [ ] CSS/JS minification
-- [ ] Deploy script
-- [ ] Deploy to production (replace Sitejet)
-- [ ] Disable Sitejet in cPanel (prevent overwrite)
-- [ ] Post-deploy verification
-- [ ] Verify revert strategy works
+
+### Prep (done locally, no server changes)
+- [x] Deploy script (`deploy.sh` with --dry and --revert)
+- [x] Board member guide in Swedish (`guide.md`)
+- [x] Admin accounts: unified password (same as server login)
+- [x] All 6 pages verified locally (200 OK)
+- [x] Admin panel verified locally (200 OK)
+- [x] 404 page verified locally (404 status)
+- [x] CSS/JS minification (main.min.css, main.min.js, scene.min.js)
+- [x] Lighthouse mobile: Performance 100, Accessibility 96, Best Practices 100, SEO 100
+- [x] Cross-browser audit (backdrop-filter prefixed, IntersectionObserver fallback, graceful degradation)
+- [x] Three.js lazy-loaded via IntersectionObserver (defers 676KB until CTA visible)
+- [x] Hero image preload + fetchpriority, fonts inlined, font preloaded
+- [x] Image optimization: hero JFIF already optimal (93KB), lazy loading on all other images
+
+### Pre-deploy checklist (before touching server)
+- [x] SSH into server: `ssh sxesv@185.113.11.31` — confirm access works
+- [ ] Verify server backup exists: `ls ~/backup_before_changes_2026-02-20.tar.gz`
+- [ ] Dry-run deploy: `./deploy.sh --dry` — review output
+- [ ] Disable Sitejet publishing in cPanel (so it doesn't overwrite us)
+  - cPanel → Sitejet → disconnect/disable auto-publish
+  - Do NOT delete the Sitejet project (keep as revert option)
+
+### Deploy
+- [ ] Deploy to production: `./deploy.sh`
+- [ ] Post-deploy verification:
+  - [ ] Homepage loads with aurora Three.js
+  - [ ] All 6 pages accessible
+  - [ ] Admin panel login works at /admin/
+  - [ ] Contact form sends email
+  - [ ] Mobile looks correct
+  - [ ] HTTPS works (no mixed content)
+- [ ] Test revert: confirm `./deploy.sh --revert` works (or just verify live-site/ is intact)
+
+### Post-deploy
+- [ ] Send guide.md to board members
+- [ ] Walk Emma through admin panel (screen share)
+- [ ] Board members change passwords on first login

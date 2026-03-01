@@ -203,4 +203,5 @@ Each sprint session should:
 **Sprint 2: COMPLETED**
 **Sprint 3: COMPLETED**
 **Sprint 4: COMPLETED**
-**Next: Sprint 5 — Forms, SEO & Contact**
+**Sprint 5: COMPLETED**
+**Next: Sprint 6 — Performance, QA & Deploy**

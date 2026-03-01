@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#F0F0F0"/>
+  <!-- Grid lines (millimeterpapper) -->
+  <line x1="128" y1="0" x2="128" y2="512" stroke="#D0D0D0" stroke-width="1"/>
+  <line x1="256" y1="0" x2="256" y2="512" stroke="#D0D0D0" stroke-width="1"/>
+  <line x1="384" y1="0" x2="384" y2="512" stroke="#D0D0D0" stroke-width="1"/>
+  <line x1="0" y1="128" x2="512" y2="128" stroke="#D0D0D0" stroke-width="1"/>
+  <line x1="0" y1="256" x2="512" y2="256" stroke="#D0D0D0" stroke-width="1"/>
+  <line x1="0" y1="384" x2="512" y2="384" stroke="#D0D0D0" stroke-width="1"/>
+  <!-- Tree stump -->
+  <rect x="216" y="280" width="80" height="120" rx="4" fill="#D4730C"/>
+  <!-- Growth rings -->
+  <ellipse cx="256" cy="280" rx="40" ry="12" fill="none" stroke="#B05E0A" stroke-width="2"/>
+  <ellipse cx="256" cy="280" rx="24" ry="7" fill="none" stroke="#B05E0A" stroke-width="1.5"/>
+  <ellipse cx="256" cy="280" rx="10" ry="3" fill="none" stroke="#B05E0A" stroke-width="1"/>
+  <!-- Crown (triangular, stylized) -->
+  <polygon points="256,80 160,260 352,260" fill="#D4730C" opacity="0.3"/>
+  <polygon points="256,130 185,260 327,260" fill="#D4730C" opacity="0.5"/>
+  <!-- Axe marks -->
+  <line x1="220" y1="310" x2="250" y2="320" stroke="#B05E0A" stroke-width="3" stroke-linecap="round"/>
+  <line x1="262" y1="340" x2="290" y2="350" stroke="#B05E0A" stroke-width="3" stroke-linecap="round"/>
+  <!-- Text: SM -->
+  <text x="256" y="460" text-anchor="middle" font-family="monospace" font-weight="700" font-size="48" fill="#2C2C2C">SM</text>
+</svg>

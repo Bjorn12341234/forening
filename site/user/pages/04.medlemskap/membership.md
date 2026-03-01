@@ -1,6 +1,8 @@
 ---
 title: 'Bli medlem!'
 subtitle: 'Varje medlem gör skillnad'
+metadata:
+  description: 'Bli medlem i Föreningen NaturHänsyn! Medlemskap kostar 100 kr/år (50 kr för familjemedlem). Betala enkelt med Swish.'
 swish_qr: '/user/themes/naturhansyn/images/content/medlemskap-qr.jpg'
 donation_qr: '/user/themes/naturhansyn/images/content/donation-qr.jpg'
 ---

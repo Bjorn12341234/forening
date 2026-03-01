@@ -1,5 +1,31 @@
 {% extends 'partials/base.html.twig' %}
 
+{% block structured_data %}
+{% if page.header.board_members %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "{{ page.title }}",
+  "url": "{{ page.url(true) }}",
+  "mainEntity": {
+    "@type": "NGO",
+    "name": "Föreningen NaturHänsyn",
+    "member": [
+      {% for member in page.header.board_members %}
+      {
+        "@type": "Person",
+        "name": "{{ member.name }}",
+        "jobTitle": "{{ member.role }}"
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="page-header">
   <div class="container">
@@ -45,6 +71,13 @@
   </div>
 </section>
 {% endif %}
+
+{# Cross-links #}
+<section class="section">
+  <div class="container container--narrow text-center fade-in">
+    <p>Vill du engagera dig? <a href="/medlemskap"><strong>Bli medlem</strong></a> redan idag, eller <a href="/kontakta-oss">kontakta oss</a> om du har frågor. Följ vårt arbete via <a href="/nyheter">nyheter</a> och <a href="/event">event</a>.</p>
+  </div>
+</section>
 
 {# Documents #}
 {% if page.header.documents %}

@@ -10,39 +10,110 @@
   </div>
 </div>
 
+{# Intro text #}
 <section class="section">
-  <div class="container container--narrow">
-    <div class="content-block fade-in">
-      {{ page.content|raw }}
+  <div class="container container--narrow text-center fade-in">
+    <p class="membership-intro">Oavsett om du vill stötta oss som passiv medlem, alternativt starta eller gå med i en arbetsgrupp i ditt område, så är du mer än välkommen! För att kunna påverka på sikt behöver vi medlemmar, inte minst för att bli tillräckligt många för att erhålla talerätt i domstol!</p>
+  </div>
+</section>
+
+{# Pricing cards #}
+<section class="section section--alt">
+  <div class="container">
+    <h2 class="text-center mb-3xl fade-in">Medlemsavgift</h2>
+    <div class="membership-pricing stagger-children">
+      <div class="membership-card membership-card--featured fade-in">
+        <div class="membership-card__badge">Populärast</div>
+        <h3 class="membership-card__title">Medlemskap</h3>
+        <p class="membership-card__price">100 <span>kr/år</span></p>
+        <p class="membership-card__desc">Fullständigt medlemskap med rösträtt på årsmöten.</p>
+        <a href="#betala" class="btn btn--cta">Bli medlem</a>
+      </div>
+      <div class="membership-card fade-in">
+        <h3 class="membership-card__title">Familjemedlem</h3>
+        <p class="membership-card__price">50 <span>kr/år</span></p>
+        <p class="membership-card__desc">För dig som bor på samma adress som en befintlig medlem.</p>
+        <a href="#betala" class="btn btn--primary">Bli medlem</a>
+      </div>
     </div>
   </div>
 </section>
 
-{# Payment Section #}
-<section class="section section--alt" style="padding-top: 0;">
-  <div class="container">
-    <div class="cta-box fade-in">
-      <h2>Betala med Swish</h2>
-      <p>Swisha till <span class="swish-number">123-2485159</span> och märk betalningen med "medlemsavgift + ditt namn".</p>
-      <p>Skicka sedan namn och e-postadress till <a href="mailto:naturhansyn@gmail.com" style="color: var(--color-accent-light);">naturhansyn@gmail.com</a></p>
-
-      <div class="payment-info">
-        {% if page.header.swish_qr %}
-        <div class="payment-card">
-          <img src="{{ page.header.swish_qr }}" alt="Swish QR-kod för medlemsavgift" loading="lazy">
-          <p class="payment-card__label">Medlemsavgift</p>
-          <p class="payment-card__amount">100 kr/år</p>
+{# How-to steps #}
+<section class="section">
+  <div class="container container--narrow">
+    <h2 class="text-center mb-3xl fade-in">Så här gör du</h2>
+    <div class="membership-steps stagger-children">
+      <div class="membership-step fade-in">
+        <div class="membership-step__number">1</div>
+        <div>
+          <h3>Swisha din avgift</h3>
+          <p>Swisha till <strong>123-2485159</strong> och märk betalningen med "medlemsavgift + ditt namn".</p>
         </div>
-        {% endif %}
-        {% if page.header.donation_qr %}
-        <div class="payment-card">
-          <img src="{{ page.header.donation_qr }}" alt="Swish QR-kod för donation" loading="lazy">
-          <p class="payment-card__label">Donation</p>
-          <p class="payment-card__amount">Valfritt belopp</p>
+      </div>
+      <div class="membership-step fade-in">
+        <div class="membership-step__number">2</div>
+        <div>
+          <h3>Skicka dina uppgifter</h3>
+          <p>Skicka namn och e-postadress till <a href="mailto:naturhansyn@gmail.com">naturhansyn@gmail.com</a></p>
         </div>
-        {% endif %}
+      </div>
+      <div class="membership-step fade-in">
+        <div class="membership-step__number">3</div>
+        <div>
+          <h3>Klart!</h3>
+          <p>Du är nu medlem i Föreningen NaturHänsyn. Välkommen!</p>
+        </div>
       </div>
     </div>
+  </div>
+</section>
+
+{# QR Code Payment Section #}
+<section class="section section--dark" id="betala">
+  <div class="container">
+    <h2 class="text-center mb-xl fade-in" style="color: #fff;">Betala med Swish</h2>
+    <p class="text-center fade-in" style="color: var(--color-text-on-dark-muted); margin-bottom: var(--space-3xl);">Skanna QR-koden med Swish-appen eller swisha direkt till <span class="swish-number">123-2485159</span></p>
+
+    <div class="payment-info stagger-children">
+      {% if page.header.swish_qr %}
+      <div class="payment-card fade-in">
+        <img src="{{ page.header.swish_qr }}" alt="Swish QR-kod för medlemsavgift" loading="lazy">
+        <p class="payment-card__label">Medlemsavgift</p>
+        <p class="payment-card__amount">100 kr/år</p>
+      </div>
+      {% endif %}
+      {% if page.header.donation_qr %}
+      <div class="payment-card fade-in">
+        <img src="{{ page.header.donation_qr }}" alt="Swish QR-kod för donation" loading="lazy">
+        <p class="payment-card__label">Donation</p>
+        <p class="payment-card__amount">Valfritt belopp</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{# GDPR + Donation info #}
+<section class="section">
+  <div class="container container--narrow">
+    <div class="membership-info-grid stagger-children">
+      <div class="membership-info-block fade-in">
+        <h3>Personuppgifter</h3>
+        <p>Självklart hanterar vi dina personuppgifter med respekt och i enlighet med GDPR. Uppgifterna används till att upprätta ett medlemsregister i syftet att hålla koll på medlemsantal och vilka som betalat medlemsavgift.</p>
+      </div>
+      <div class="membership-info-block fade-in">
+        <h3>Donation</h3>
+        <p>Det går naturligtvis även att skicka en donation. Detta görs i dagsläget lättast via samma swishnummer, men märk då istället swishen med "Donation + namn".</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Cross-links #}
+<section class="section section--alt">
+  <div class="container container--narrow text-center fade-in">
+    <p>Har du frågor om medlemskap? <a href="/kontakta-oss"><strong>Kontakta oss</strong></a> så hjälper vi dig! Du kan också läsa mer <a href="/om-foereningen">om föreningen</a> och följa oss på <a href="https://www.facebook.com/profile.php?id=61558332027547" target="_blank" rel="noopener">Facebook</a>.</p>
   </div>
 </section>
 {% endblock %}
