@@ -1656,4 +1656,74 @@ img[loading="lazy"][complete] {
   .cta-banner__canvas {
     display: none !important;
   }
+
+  .floating-badge {
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   Floating News Badge
+   ============================================ */
+
+.floating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0.7rem 1.4rem 0.7rem 1rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-base);
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 0 12px rgba(107, 158, 58, 0.5),
+    0 0 30px rgba(107, 158, 58, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: badge-bob 2.5s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.floating-badge:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 18px rgba(107, 158, 58, 0.7),
+    0 0 40px rgba(107, 158, 58, 0.35),
+    0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.floating-badge__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  animation: dot-pulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.floating-badge__text {
+  white-space: nowrap;
+}
+
+@keyframes badge-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.7); }
+}
+
+@media (max-width: 600px) {
+  .floating-badge {
+    font-size: var(--text-sm);
+    padding: 0.5rem 1rem 0.5rem 0.7rem;
+  }
 }
