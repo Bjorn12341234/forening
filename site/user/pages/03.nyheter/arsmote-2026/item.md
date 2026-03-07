@@ -1,6 +1,7 @@
 ---
 title: 'Dags för årsmöte 2026!'
 date: '2026-03-07'
+display_date: 'Möte 31 mars'
 image: /nyheter/arsmote-2026/arsmote-2026.jpeg
 ---
 
