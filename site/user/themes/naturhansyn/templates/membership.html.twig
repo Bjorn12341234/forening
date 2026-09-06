@@ -70,15 +70,43 @@
 </section>
 
 {# QR Code Payment Section #}
+
+{#
+  Swish-QR för medlemsavgiften väljs AUTOMATISKT efter innevarande år.
+
+  Filnamn:  medlemskap-qr-<år>.jpg   (t.ex. medlemskap-qr-2026.jpg)
+  Sökordning per år:
+    1. sidans egna media  — dvs en fil uppladdad direkt på sidan i admin
+    2. temats bildmapp    — user/themes/naturhansyn/images/content/
+
+  Saknas årets fil backar vi bakåt upp till 10 år och visar den senaste
+  som finns. Sidan blir alltså aldrig bildlös, den blir på sin höjd
+  ett år gammal — och en gammal QR fungerar fortfarande att betala med,
+  det är bara meddelandetexten som får fel årtal.
+
+  Vill man styra manuellt: fyll i fältet "Swish QR-kod (medlemsavgift)"
+  i admin, så vinner den över automatiken. Töm fältet för att gå tillbaka.
+#}
+{% set swish_qr = page.header.swish_qr|default(false) %}
+{% set qr_year = 'now'|date('Y') %}{# måste deklareras utanför loopen för att överleva den #}
+{% for years_back in 0..10 %}
+  {% if not swish_qr %}
+    {% set qr_year = ('now'|date('Y')) - years_back %}
+    {% set qr_file = 'medlemskap-qr-' ~ qr_year ~ '.jpg' %}
+    {% set qr_medium = page.media[qr_file] %}
+    {% set swish_qr = qr_medium ? qr_medium.url : url('theme://images/content/' ~ qr_file) %}
+  {% endif %}
+{% endfor %}
+
 <section class="section section--dark" id="betala">
   <div class="container">
     <h2 class="text-center mb-xl fade-in" style="color: #fff;">Betala med Swish</h2>
     <p class="text-center fade-in" style="color: var(--color-text-on-dark-muted); margin-bottom: var(--space-3xl);">Skanna QR-koden med Swish-appen eller swisha direkt till <span class="swish-number">123-2485159</span></p>
 
     <div class="payment-info stagger-children">
-      {% if page.header.swish_qr %}
+      {% if swish_qr %}
       <div class="payment-card fade-in">
-        <img src="{{ page.header.swish_qr }}" alt="Swish QR-kod för medlemsavgift" loading="lazy">
+        <img src="{{ swish_qr }}" alt="Swish QR-kod för medlemsavgift {{ qr_year }}" loading="lazy">
         <p class="payment-card__label">Medlemsavgift</p>
         <p class="payment-card__amount">100 kr/år</p>
       </div>

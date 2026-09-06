@@ -20,7 +20,8 @@ form:
 
             header.swish_qr:
               type: filepicker
-              label: Swish QR-kod (medlemsavgift)
+              label: 'Swish QR-kod (medlemsavgift) — manuell override'
+              help: 'LÄMNA TOM! Då väljs QR-koden för innevarande år automatiskt (medlemskap-qr-2026.jpg, medlemskap-qr-2027.jpg osv). Välj en fil här bara om du tillfälligt vill tvinga fram en annan bild — töm fältet igen för att återgå till automatiken.'
               preview_images: true
               folder: 'theme://images/content'
               accept:

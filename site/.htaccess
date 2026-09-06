@@ -76,3 +76,16 @@ RewriteRule ^(LICENSE\.txt|composer\.lock|composer\.json|\.htaccess)$ error [F]
 Options -Indexes
 DirectoryIndex index.php index.html index.htm
 # End - Prevent Browsing and Set Default Resources
+
+# Begin - Cache-Control for HTML pages
+# Servern (LiteSpeed) sätter annars "max-age=604800" på ALLT den skickar,
+# även HTML. Det gör att en återkommande besökare kan se en vecka gammal
+# sida — t.ex. fjolårets Swish-QR i januari, eller en gammal nyhetslista.
+# Bilder/CSS/JS behåller sin långa cache; de har unika filnamn.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(php|html?)$">
+    Header always set Cache-Control "no-cache, must-revalidate, max-age=0"
+    Header always unset Expires
+  </FilesMatch>
+</IfModule>
+# End - Cache-Control for HTML pages

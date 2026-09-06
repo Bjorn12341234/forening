@@ -108,3 +108,17 @@
 - [ ] Send guide.md to board members
 - [ ] Walk Emma through admin panel (screen share)
 - [ ] Board members change passwords on first login
+
+## Content Updates
+- [x] Add årsmöte 2026 news article (image + text, requested by ordförande)
+- [x] Byt Swish-QR för medlemsavgift 2025 → 2026
+- [x] Automatiskt årsval av Swish-QR (medlemskap-qr-<år>.jpg, byter 1 jan)
+  - [x] Webboptimerade QR-bilder för 2026–2030 i theme://images/content
+  - [x] Fallback bakåt 10 år + döljer kortet om inget finns
+  - [x] Manuell override kvar i admin (header.swish_qr, tom = automatik)
+  - [x] timezone: Europe/Stockholm i system.yaml (annars byts året 01:00)
+  - [x] .htaccess: no-cache på HTML (servern satte max-age=604800 på allt)
+  - [ ] **Verifiera efter deploy:** `curl -sI https://naturhansyn.se/medlemskap | grep -i cache-control`
+        ska INTE längre säga max-age=604800. Gör den det stödjer inte
+        servern mod_headers — hör av dig, då får vi lösa det i cPanel/LiteSpeed.
+  - [ ] **Inför 2031:** lägg in nya QR-koder (se admin-guide.md)

@@ -1,3 +1,8 @@
+# Tidszon styr vilket år {{ 'now'|date('Y') }} ger i mallarna.
+# Utan detta använder servern UTC och Swish-QR:n skulle byta år
+# kl 01:00 svensk tid natten till 1 januari i stället för midnatt.
+timezone: Europe/Stockholm
+
 absolute_urls: false
 
 home:

@@ -77,8 +77,29 @@ Samma procedur som nyheter, men under **Sidor** → **Event** istället.
 1. Gå till **Sidor** → **Bli medlem!**
 2. Här kan du redigera:
    - Texten om medlemskap
-   - **Swish QR-koder** (medlemsavgift och donation)
+   - **Swish QR-kod för donation**
 3. Spara
+
+### Swish QR-koden för medlemsavgift byts automatiskt
+
+Du behöver **inte** göra någonting vid årsskiftet. Sajten byter själv till
+årets QR-kod natten till 1 januari.
+
+Färdiga koder finns inlagda till och med **2030**. Fältet
+"Swish QR-kod (medlemsavgift) — manuell override" i admin ska normalt stå
+**tomt** — fyller du i något där stängs automatiken av tills du tömmer det igen.
+
+**Så lägger du in QR-koder för fler år (görs inför 2031):**
+
+1. Skapa QR-koderna i Swish-appen, en per år, med meddelandet
+   `FNH Medlemskap <år>` — precis som de nuvarande.
+2. Gå till **Sidor** → **Bli medlem!** → fliken/rutan för **media**
+3. Dra in bilden och döp filen exakt: `medlemskap-qr-2031.jpg`
+   (samma mönster för varje år: `medlemskap-qr-2032.jpg` osv.)
+4. Spara. Sajten plockar upp filen automatiskt när det året börjar.
+
+Saknas årets bild visar sajten den senaste som finns i stället — den fungerar
+fortfarande att betala med, det är bara årtalet i meddelandet som blir fel.
 
 ---
 
