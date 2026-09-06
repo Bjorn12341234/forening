@@ -2,8 +2,9 @@
 #
 # Deploy naturhansyn.se (Grav CMS) to production server
 # Usage:
-#   ./deploy.sh          — deploy to production
+#   ./deploy.sh          — deploy to production (inkrementellt)
 #   ./deploy.sh --dry    — dry run (shows what would change, no actual upload)
+#   ./deploy.sh --clean  — tom public_html forst (spar user/data + accounts)
 #   ./deploy.sh --revert — revert to original Sitejet site
 #
 
@@ -22,12 +23,22 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Common rsync excludes for deploy
+#
+# OBS: /user/data/, /user/accounts/ och /.well-known/ ligger BARA pa servern
+# och far aldrig skrivas over av lokala filer:
+#   /user/data/     — inkomna meddelanden fran kontaktformularet
+#   /user/accounts/ — losenord som styrelsen andrat i admin
+#   /.well-known/   — Let's Encrypt/AutoSSL, behovs for att forny HTTPS
+# Eftersom de ar exkluderade skyddas de ocksa mot --delete.
 EXCLUDES=(
     --exclude='.git'
     --exclude='/cache/*'
     --exclude='/tmp/*'
     --exclude='/logs/*'
     --exclude='/backup/*'
+    --exclude='/user/data/'
+    --exclude='/user/accounts/'
+    --exclude='/.well-known/'
     --exclude='.DS_Store'
     --exclude='*.log'
 )
@@ -56,11 +67,12 @@ deploy() {
         fi
         echo ""
 
-        # Clean public_html before deploy to remove old Sitejet files
-        echo "Cleaning remote ${REMOTE_PATH}..."
-        $SSH_CMD "$SERVER" "rm -rf ${REMOTE_PATH}* ${REMOTE_PATH}.htaccess"
-        echo "Clean done."
-        echo ""
+        # Tidigare tomdes public_html helt har med "rm -rf" for att bli av med
+        # gamla Sitejet-filer. Det behovs inte langre — Sitejet ar borta och
+        # rsync --delete stadar bort det som inte ska finnas kvar. Framfor allt
+        # radade rm -rf aven sadant som bara finns pa servern, t.ex. inkomna
+        # meddelanden fran kontaktformularet. Behover du anda tomma allt:
+        #   ./deploy.sh --clean
     fi
 
     rsync $RSYNC_FLAGS -e "$SSH_CMD" "${EXCLUDES[@]}" "$LOCAL_SITE" "${SERVER}:${REMOTE_PATH}"
@@ -100,7 +112,8 @@ revert() {
 
     echo ""
     echo "Reverting..."
-    rsync -avz --delete -e "$SSH_CMD" "$LOCAL_SITEJET" "${SERVER}:${REMOTE_PATH}"
+    # .well-known skonas aven vid revert — annars kan HTTPS-fornyelsen braka
+    rsync -avz --delete --exclude='/.well-known/' -e "$SSH_CMD" "$LOCAL_SITEJET" "${SERVER}:${REMOTE_PATH}"
 
     echo ""
     echo -e "${GREEN}Revert complete. The Sitejet site is restored.${NC}"
@@ -125,6 +138,18 @@ case "${1:-}" in
     --dry)
         deploy "true"
         ;;
+    --clean)
+        echo -e "${RED}=== FULL CLEAN DEPLOY ===${NC}"
+        echo "Tommer public_html pa servern helt innan uppladdning."
+        echo -e "${YELLOW}Sparas: user/data/, user/accounts/, .well-known/${NC}"
+        read -p "Ar du saker? (yes/no): " CONFIRM
+        [ "$CONFIRM" = "yes" ] || { echo "Avbrutet."; exit 0; }
+        $SSH_CMD "$SERVER" "cd ${REMOTE_PATH} && find . -mindepth 1 -maxdepth 1 \
+            ! -name 'user' ! -name '.well-known' -exec rm -rf {} + && \
+            cd user && find . -mindepth 1 -maxdepth 1 \
+            ! -name 'data' ! -name 'accounts' -exec rm -rf {} +"
+        deploy "false"
+        ;;
     --revert)
         revert
         ;;
@@ -132,10 +157,11 @@ case "${1:-}" in
         deploy "false"
         ;;
     *)
-        echo "Usage: ./deploy.sh [--dry|--revert]"
+        echo "Usage: ./deploy.sh [--dry|--clean|--revert]"
         echo ""
-        echo "  (no args)  Deploy Grav site to production"
+        echo "  (no args)  Deploy Grav site to production (inkrementellt)"
         echo "  --dry      Dry run (preview changes, upload nothing)"
+        echo "  --clean    Tom public_html forst (spar user/data, accounts, .well-known)"
         echo "  --revert   Revert to original Sitejet site"
         exit 1
         ;;
